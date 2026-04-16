@@ -443,7 +443,9 @@ function getFiltered(){
   const s=document.getElementById('startDate').value;
   const e=document.getElementById('endDate').value;
   const sev=document.getElementById('sevFilter').value;
-  const sd=s?new Date(s):null, ed=e?new Date(e):null;
+  // Append time to force LOCAL timezone parsing (avoids UTC-midnight cutoff bug)
+  const sd=s?new Date(s+'T00:00:00'):null;
+  const ed=e?new Date(e+'T23:59:59'):null;
   return ALL.filter(r=>{
     const dt=parseD(r.d);
     return(!sd||dt>=sd)&&(!ed||dt<=ed)&&(!sev||r.sev===sev);
