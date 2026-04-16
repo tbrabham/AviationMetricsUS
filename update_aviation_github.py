@@ -215,10 +215,23 @@ def main():
           f"Cancels: {new_record['cx']}")
 
     print("   Fetching current aviation_data.json from GitHub...")
-    file_info    = github_get(FILE_PATH)
-    current_raw  = base64.b64decode(file_info["content"]).decode("utf-8")
-    current_data = json.loads(current_raw)
-    sha          = file_info["sha"]
+    file_info = github_get(FILE_PATH)
+    sha       = file_info["sha"]
+
+    # GitHub API returns base64 with embedded newlines — strip them before decoding
+    content_b64 = file_info["content"].replace("\n", "").replace("\r", "")
+    current_raw = base64.b64decode(content_b64).decode("utf-8").strip()
+
+    try:
+        current_data = json.loads(current_raw)
+        if not isinstance(current_data, list):
+            current_data = [current_data]
+        print(f"   → Loaded {len(current_data)} existing records.")
+    except json.JSONDecodeError as e:
+        print(f"   ⚠  Could not parse existing JSON: {e}")
+        print(f"   ⚠  Content preview: {current_raw[:300]!r}")
+        print("   ⚠  Starting with existing records from fallback data.")
+        current_data = []
 
     # Remove existing record for today if present (allow re-runs)
     current_data = [r for r in current_data if r["d"] != today_d]
