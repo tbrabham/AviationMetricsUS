@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✈ US Aviation Disruption Intelligence | OTA Workforce Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --navy:#0d1b2a; --navy2:#162032; --navy3:#1e3050; --accent:#2196f3; --accent2:#00b0ff;
+  --gold:#ffc107; --border:#2a3f5c; --text:#e0e8f0; --text-dim:#7a9ab8;
+  --normal:#4caf50; --moderate:#ffc107; --high:#f44336; --critical:#c62828; --crisis:#7b1fa2;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--navy);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;font-size:14px}
+
+/* ── Header ── */
+.header{background:linear-gradient(135deg,#0a1628,#162850 50%,#0a1628);border-bottom:2px solid var(--accent);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 20px rgba(0,0,0,.5)}
+.header-left{display:flex;align-items:center;gap:12px}
+.header-icon{font-size:26px}
+.header-title{font-size:17px;font-weight:700;letter-spacing:.4px;color:#fff}
+.header-sub{font-size:10px;color:var(--accent2);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.header-actions{display:flex;gap:8px;align-items:center}
+.badge{background:rgba(33,150,243,.2);border:1px solid var(--accent);border-radius:20px;padding:3px 11px;font-size:11px;color:var(--accent2);font-weight:600}
+
+/* ── Tabs ── */
+.tabs{background:var(--navy2);border-bottom:1px solid var(--border);display:flex;gap:0;padding:0 24px;overflow-x:auto}
+.tab{padding:10px 18px;font-size:12px;font-weight:600;color:var(--text-dim);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--accent2);border-bottom-color:var(--accent)}
+
+/* ── Controls ── */
+.controls{background:var(--navy2);border-bottom:1px solid var(--border);padding:11px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.ctrl-label{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text-dim);font-weight:600}
+.date-input,.sel{background:var(--navy3);border:1px solid var(--border);border-radius:5px;color:var(--text);padding:6px 10px;font-size:12px;outline:none;cursor:pointer;transition:border-color .2s}
+.date-input:hover,.date-input:focus,.sel:hover,.sel:focus{border-color:var(--accent)}
+.date-input::-webkit-calendar-picker-indicator{filter:invert(.7) sepia(1) saturate(3) hue-rotate(180deg)}
+.btn{border:none;border-radius:5px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text-dim)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent2)}
+.qbtn{background:var(--navy3);border:1px solid var(--border);border-radius:4px;color:var(--text-dim);padding:4px 10px;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;text-transform:uppercase;letter-spacing:.3px}
+.qbtn:hover,.qbtn.active{background:rgba(33,150,243,.15);border-color:var(--accent);color:var(--accent2)}
+.div-v{width:1px;height:24px;background:var(--border)}
+
+/* ── KPI Strip ── */
+.kpis{display:flex;background:var(--navy2);border-bottom:1px solid var(--border)}
+.kpi{flex:1;padding:10px 14px;text-align:center;border-right:1px solid var(--border)}
+.kpi:last-child{border-right:none}
+.kpi-val{font-size:20px;font-weight:700;letter-spacing:-.5px}
+.kpi-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--text-dim);margin-top:2px;font-weight:600}
+.kpi-sub{font-size:11px;color:var(--text-dim);margin-top:1px}
+
+/* ── Alert Banner ── */
+.alert{margin:10px 24px 0;border-radius:7px;padding:9px 14px;font-size:12px;display:none;align-items:flex-start;gap:9px;border-left:3px solid;line-height:1.5}
+.alert.show{display:flex}
+.alert.hi{background:rgba(244,67,54,.1);border-color:#f44336}
+
+/* ── Tab Panels ── */
+.panel{display:none}
+.panel.active{display:block}
+
+/* ── Charts ── */
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:16px 24px}
+.chart-card{background:var(--navy2);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.chart-header{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.chart-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--accent2)}
+.chart-meta{font-size:10px;color:var(--text-dim)}
+.chart-body{padding:14px;position:relative;height:250px}
+
+/* ── Data Table ── */
+.table-wrap{padding:12px 24px;overflow-x:auto}
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px}
+thead th{background:var(--navy3);color:var(--text-dim);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:9px 11px;text-align:left;border-bottom:2px solid var(--accent);white-space:nowrap;position:sticky;top:0;z-index:5}
+tbody tr{cursor:pointer;transition:background .12s}
+tbody tr:hover{background:rgba(33,150,243,.07)}
+tbody tr.sel{background:rgba(33,150,243,.13)!important;outline:1px solid rgba(33,150,243,.3)}
+tbody td{padding:9px 11px;vertical-align:top;border-bottom:1px solid rgba(42,63,92,.6);line-height:1.4}
+.dt-cell{font-weight:600;white-space:nowrap;font-size:12px}
+.dy-cell{color:var(--text-dim);font-size:11px}
+
+.sv{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:3px 9px;font-size:10px;font-weight:700;letter-spacing:.4px;white-space:nowrap}
+.sv .dot{width:5px;height:5px;border-radius:50%}
+.sv-NORMAL  {background:rgba(76,175,80,.15);color:#4caf50;border:1px solid rgba(76,175,80,.3)}
+.sv-MODERATE{background:rgba(255,193,7,.15);color:#ffc107;border:1px solid rgba(255,193,7,.3)}
+.sv-HIGH    {background:rgba(244,67,54,.15);color:#f44336;border:1px solid rgba(244,67,54,.3)}
+.sv-CRITICAL{background:rgba(198,40,40,.2);color:#ff5252;border:1px solid rgba(244,67,54,.5)}
+.sv-CRISIS  {background:rgba(123,31,162,.2);color:#ce93d8;border:1px solid rgba(123,31,162,.5)}
+.sv-LOW     {background:rgba(76,175,80,.12);color:#81c784;border:1px solid rgba(76,175,80,.2)}
+
+.sc-wrap{display:flex;align-items:center;gap:7px}
+.sc-num{font-weight:700;font-size:14px;min-width:24px}
+.sc-bar{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.08);min-width:50px}
+.sc-fill{height:100%;border-radius:3px}
+
+.num-r{text-align:right;font-weight:600}
+.num-s{font-size:10px;color:var(--text-dim)}
+.apt-chip{display:inline-block;background:rgba(33,150,243,.1);border:1px solid rgba(33,150,243,.25);border-radius:3px;padding:1px 6px;font-size:10px;font-weight:600;margin:2px 2px 2px 0;color:var(--accent2)}
+.cause-c{max-width:200px;font-size:11px;line-height:1.5}
+.fwd-c{max-width:180px;font-size:11px;color:var(--text-dim);line-height:1.5}
+
+.det-row{display:none}
+.det-row.open{display:table-row}
+.det-panel{background:rgba(22,32,50,.7);border:1px solid var(--border);border-radius:7px;margin:3px 0 10px;padding:14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;font-size:11.5px}
+.det-sec-title{font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--accent2);font-weight:700;margin-bottom:7px;border-bottom:1px solid rgba(33,150,243,.2);padding-bottom:3px}
+.det-item{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.det-lbl{color:var(--text-dim)}
+.det-val{font-weight:600;text-align:right}
+
+.tot-row td{background:var(--navy3);font-weight:700;border-top:2px solid var(--accent);font-size:11.5px;padding:9px 11px}
+
+.empty{text-align:center;padding:50px;color:var(--text-dim)}
+.empty-icon{font-size:40px;margin-bottom:12px;opacity:.4}
+
+/* Storage panel */
+.store-wrap{padding:0 24px 20px}
+.store-panel{background:var(--navy2);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.store-hdr{background:var(--navy3);padding:11px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--accent2);border-bottom:1px solid var(--border)}
+.store-body{padding:14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.opt{border:1px solid var(--border);border-radius:8px;padding:14px;position:relative}
+.opt.rec{border-color:var(--accent)}
+.opt-badge{position:absolute;top:-9px;left:10px;background:var(--accent);color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:9px;letter-spacing:.4px;text-transform:uppercase}
+.opt-title{font-weight:700;margin-bottom:6px;font-size:12.5px}
+.opt-desc{font-size:11px;color:var(--text-dim);line-height:1.6}
+.pro{color:#4caf50;font-size:10px;margin-top:6px}
+.con{color:#f44336;font-size:10px}
+
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--navy)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="header-icon">✈</div>
+    <div>
+      <div class="header-title">US Aviation Disruption Intelligence Dashboard</div>
+      <div class="header-sub">OTA Workforce Management · Real-Time Disruption Analysis</div>
+    </div>
+  </div>
+  <div class="header-actions">
+    <div class="badge">⬤ LIVE DATA</div>
+    <button class="btn btn-outline" onclick="exportCSV()" style="font-size:11px;padding:5px 12px">⬇ Export CSV</button>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('data',this)">📋 Daily Data</div>
+  <div class="tab" onclick="switchTab('score',this)">📈 Disruption Score</div>
+  <div class="tab" onclick="switchTab('delays',this)">✈ Delays &amp; Cancels</div>
+  <div class="tab" onclick="switchTab('rate',this)">% Cancel Rate</div>
+  <div class="tab" onclick="switchTab('pax',this)">👥 Wtd. Passengers</div>
+  <div class="tab" onclick="switchTab('overview',this)">🗄 Data Setup</div>
+</div>
+
+<div class="controls">
+  <div style="display:flex;align-items:center;gap:7px">
+    <span class="ctrl-label">From</span>
+    <input type="date" class="date-input" id="startDate" value="2026-03-30" onchange="refresh()">
+    <span class="ctrl-label">To</span>
+    <input type="date" class="date-input" id="endDate" value="2026-04-13" onchange="refresh()">
+  </div>
+  <div class="div-v"></div>
+  <div style="display:flex;align-items:center;gap:7px">
+    <span class="ctrl-label">Quick</span>
+    <div style="display:flex;gap:5px">
+      <button class="qbtn" onclick="setRange(7,this)">7D</button>
+      <button class="qbtn active" onclick="setRange(15,this)">15D</button>
+      <button class="qbtn" onclick="setRange(30,this)">30D</button>
+      <button class="qbtn" onclick="setRange(0,this)">All</button>
+    </div>
+  </div>
+  <div class="div-v"></div>
+  <div style="display:flex;align-items:center;gap:7px">
+    <span class="ctrl-label">Severity</span>
+    <select class="sel" id="sevFilter" onchange="refresh()">
+      <option value="">All</option>
+      <option value="CRISIS">Crisis</option>
+      <option value="CRITICAL">Critical</option>
+      <option value="HIGH">High</option>
+      <option value="MODERATE">Moderate</option>
+      <option value="NORMAL">Normal</option>
+    </select>
+  </div>
+  <span style="margin-left:auto;color:var(--text-dim);font-size:11px">📂 <code style="color:var(--accent2)">aviation_data.json</code> · <span id="rec-count">—</span> records</span>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-val" id="k-days" style="color:var(--accent2)">—</div><div class="kpi-lbl">Days Selected</div></div>
+  <div class="kpi"><div class="kpi-val" id="k-dl" style="color:#ffc107">—</div><div class="kpi-lbl">Total Delays</div><div class="kpi-sub" id="k-dl-avg"></div></div>
+  <div class="kpi"><div class="kpi-val" id="k-cx" style="color:#f44336">—</div><div class="kpi-lbl">Total Cancels</div><div class="kpi-sub" id="k-cx-avg"></div></div>
+  <div class="kpi"><div class="kpi-val" id="k-wp" style="color:#ce93d8">—</div><div class="kpi-lbl">Wtd. Pax Impacted</div></div>
+  <div class="kpi"><div class="kpi-val" id="k-sc" style="color:#ffc107">—</div><div class="kpi-lbl">Avg Score</div><div class="kpi-sub" id="k-sc-peak"></div></div>
+  <div class="kpi"><div class="kpi-val" id="k-hi" style="color:#f44336">—</div><div class="kpi-lbl">HIGH+ Days</div><div class="kpi-sub" id="k-ota"></div></div>
+</div>
+
+<div class="alert" id="alertBanner"><span>⚠️</span><span id="alertText"></span></div>
+
+<!-- DATA TAB -->
+<div class="panel active" id="panel-data">
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Date</th><th>Day</th><th>Severity</th><th>Score</th>
+        <th style="text-align:right">Delays</th><th style="text-align:right">Cancels</th>
+        <th style="text-align:right">Wtd. Pax</th><th>Top Airports</th>
+        <th>Primary Cause</th><th>OTA Risk</th><th>Forward Look</th>
+      </tr></thead>
+      <tbody id="tBody"></tbody>
+      <tfoot id="tFoot"></tfoot>
+    </table>
+  </div>
+</div>
+
+<!-- SCORE TAB -->
+<div class="panel" id="panel-score">
+  <div style="padding:16px 24px">
+    <div class="chart-card">
+      <div class="chart-header">
+        <span class="chart-title">📈 Disruption Score — Daily Trend</span>
+        <span class="chart-meta">Thresholds: ≤25 Normal · ≤50 Moderate · ≤75 High · ≤90 Critical · &gt;90 Crisis</span>
+      </div>
+      <div class="chart-body" style="height:320px"><canvas id="chartScore"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- DELAYS TAB -->
+<div class="panel" id="panel-delays">
+  <div style="padding:16px 24px">
+    <div class="chart-card">
+      <div class="chart-header">
+        <span class="chart-title">✈ Total Delays &amp; Cancellations — Daily</span>
+        <span class="chart-meta">Baselines: 5,601 delays · 340 cancels per day</span>
+      </div>
+      <div class="chart-body" style="height:320px"><canvas id="chartDelays"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- CANCEL RATE TAB -->
+<div class="panel" id="panel-rate">
+  <div style="padding:16px 24px">
+    <div class="chart-card">
+      <div class="chart-header">
+        <span class="chart-title">% Cancellation Rate vs. Baseline</span>
+        <span class="chart-meta">100% = baseline of 340 cancels/day · Formula: (cancels / 340) × 100</span>
+      </div>
+      <div class="chart-body" style="height:320px"><canvas id="chartRate"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAX TAB -->
+<div class="panel" id="panel-pax">
+  <div style="padding:16px 24px">
+    <div class="chart-card">
+      <div class="chart-header">
+        <span class="chart-title">👥 Weighted Passengers Impacted</span>
+        <span class="chart-meta">Formula: (cancels × 650) + (delays × 90)</span>
+      </div>
+      <div class="chart-body" style="height:320px"><canvas id="chartPax"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- DATA SETUP TAB -->
+<div class="panel" id="panel-overview">
+  <div style="padding:16px 24px 10px">
+    <div class="store-panel">
+      <div class="store-hdr">🗄 Data Storage Options — Where to Host Your Raw Data</div>
+      <div class="store-body">
+        <div class="opt rec">
+          <div class="opt-badge">⭐ Recommended</div>
+          <div class="opt-title">🐙 GitHub Pages + JSON</div>
+          <div class="opt-desc"><strong>Cost: Free</strong> for a public repo. Anyone with the URL views the live page — no login required. Your <code>aviation_data.json</code> lives in a GitHub repo. This HTML file fetches it via the raw URL. Your daily Cowork task auto-commits each morning.<br><br>For a private link (restricted viewers), GitHub Pro is $4/month.</div>
+          <div class="pro">✓ Zero cost · Full version history · No server</div>
+          <div class="pro">✓ Share a URL — viewers need no accounts</div>
+          <div class="pro">✓ Works directly with your existing JSON workflow</div>
+          <div class="con">✗ Raw data is publicly visible on free tier</div>
+        </div>
+        <div class="opt">
+          <div class="opt-title">⚡ Supabase (Free Tier)</div>
+          <div class="opt-desc"><strong>Cost: Free</strong> up to 500MB / 50k rows. PostgreSQL database with auto-generated REST API. Each daily record = one row. The dashboard queries by date range via a simple fetch URL. Supabase provides a web UI to view and manage all data.</div>
+          <div class="pro">✓ Private by default · Real database · Secure</div>
+          <div class="pro">✓ Scales well · Easy filtering server-side</div>
+          <div class="con">✗ Requires setup · Daily task must POST to API</div>
+          <div class="con">✗ More moving parts than simple JSON</div>
+        </div>
+        <div class="opt">
+          <div class="opt-title">💻 Local Python Server</div>
+          <div class="opt-desc"><strong>Cost: Free</strong>. Run one command on your computer — Python serves the JSON to the browser. Fully offline, instantly current, no cloud dependency. One command: <code>python3 -m http.server 8080</code></div>
+          <div class="pro">✓ Zero setup · Fully offline · Instant updates</div>
+          <div class="pro">✓ Data never leaves your machine</div>
+          <div class="con">✗ Server must be running each session</div>
+          <div class="con">✗ Not shareable with external users</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="padding:0 24px 20px">
+    <div class="store-panel">
+      <div class="store-hdr">🔌 How the Live GitHub Pages Version Would Work</div>
+      <div style="padding:14px 16px;font-size:12px;line-height:2;color:var(--text-dim)">
+        <strong style="color:var(--text)">Step 1:</strong> Create a free GitHub account → New repo → upload <code style="color:var(--accent2)">aviation_data.json</code> and this HTML file.<br>
+        <strong style="color:var(--text)">Step 2:</strong> Enable GitHub Pages in Settings → site goes live at <code style="color:var(--accent2)">https://yourusername.github.io/aviation-dashboard/</code><br>
+        <strong style="color:var(--text)">Step 3:</strong> Change the data source in this file from the embedded array to <code style="color:var(--accent2)">fetch('aviation_data.json').then(...)</code> — one line change.<br>
+        <strong style="color:var(--text)">Step 4:</strong> A scheduled Cowork task appends each new daily record and runs <code style="color:var(--accent2)">git commit + push</code>. Dashboard refreshes within minutes.<br>
+        <strong style="color:var(--text)">Sharing:</strong> Send anyone the GitHub Pages URL. They see the live dashboard in any browser — no login, no install, works on phone or desktop.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── 45 records: Feb 28 – Apr 13, 2026 ─────────────────────────────────────
+const ALL=[
+{"d":"0228","sev":"HIGH","sc":58,"dl":3045,"cx":101,"wp":339700,"apt":[{"c":"ATL","dl":312,"cx":18,"s":"Winter storm"},{"c":"ORD","dl":287,"cx":14,"s":"Winter storm"},{"c":"DFW","dl":201,"cx":9,"s":"Winter storm"}],"cause":"Winter storm system across Southeast + DHS shutdown TSA staffing pressure","ota":"HIGH","fwd":"Residual disruption through Mar 1; TSA staffing gaps persist.","conf":"PARTIAL"},
+{"d":"0301","sev":"MODERATE","sc":28,"dl":2100,"cx":90,"wp":225000,"apt":[{"c":"ORD","dl":198,"cx":12,"s":"Residual winter storm"},{"c":"JFK","dl":145,"cx":8,"s":"NE corridor winds"},{"c":"EWR","dl":133,"cx":6,"s":"NE corridor winds"}],"cause":"Residual winter storm effects + NE corridor winds","ota":"MODERATE","fwd":"Conditions improving; spring break travel builds.","conf":"PARTIAL"},
+{"d":"0305","sev":"MODERATE","sc":34,"dl":2420,"cx":115,"wp":292300,"apt":[{"c":"ORD","dl":210,"cx":18,"s":"Weather/staffing"},{"c":"ATL","dl":178,"cx":12,"s":"Weather"},{"c":"DFW","dl":155,"cx":9,"s":"Weather"}],"cause":"Spring storm development + TSA staffing shortages Day 10","ota":"MODERATE","fwd":"Spring storm activity building through weekend.","conf":"PARTIAL"},
+{"d":"0307","sev":"HIGH","sc":55,"dl":4100,"cx":189,"wp":492950,"apt":[{"c":"ORD","dl":389,"cx":42,"s":"Severe thunderstorms"},{"c":"ATL","dl":267,"cx":28,"s":"Thunderstorms"},{"c":"DFW","dl":234,"cx":19,"s":"Thunderstorms"}],"cause":"Major spring storm system + TSA staffing shortages (Day 12) + peak weekend volume","ota":"HIGH","fwd":"Storm exits Mon; residual crew repositioning through Tue.","conf":"PARTIAL"},
+{"d":"0310","sev":"MODERATE","sc":36,"dl":2540,"cx":122,"wp":307180,"apt":[{"c":"ORD","dl":228,"cx":19,"s":"Weather/staffing"},{"c":"ATL","dl":189,"cx":14,"s":"Weather"},{"c":"DFW","dl":167,"cx":10,"s":"Weather"}],"cause":"Spring storms developing + TSA staffing gaps Day 15","ota":"MODERATE","fwd":"Storm strengthening into weekend; elevated disruption expected.","conf":"PARTIAL"},
+{"d":"0311","sev":"HIGH","sc":52,"dl":3780,"cx":165,"wp":447170,"apt":[{"c":"ORD","dl":334,"cx":36,"s":"Thunderstorms"},{"c":"ATL","dl":245,"cx":22,"s":"Thunderstorms"},{"c":"DFW","dl":212,"cx":18,"s":"Thunderstorms"}],"cause":"Spring thunderstorm system across Midwest/South + TSA gaps","ota":"HIGH","fwd":"Storm clearing Sun; operational recovery Mon-Tue.","conf":"PARTIAL"},
+{"d":"0316","sev":"HIGH","sc":57,"dl":4280,"cx":192,"wp":509780,"apt":[{"c":"MCO","dl":378,"cx":35,"s":"Spring Break surge"},{"c":"FLL","dl":289,"cx":28,"s":"Spring Break surge"},{"c":"ATL","dl":245,"cx":22,"s":"Weather+volume"}],"cause":"Spring Break peak weekend + weather + TSA staffing shortages Day 21","ota":"HIGH","fwd":"Peak Spring Break week; expect elevated OTA contacts through Mar 22.","conf":"PARTIAL"},
+{"d":"0321","sev":"HIGH","sc":58,"dl":4320,"cx":196,"wp":516380,"apt":[{"c":"MCO","dl":389,"cx":36,"s":"Spring Break return"},{"c":"FLL","dl":298,"cx":27,"s":"Spring Break return"},{"c":"ATL","dl":256,"cx":23,"s":"Storm+volume"}],"cause":"Spring Break return weekend surge + storm systems + TSA staffing gaps","ota":"HIGH","fwd":"Return peak ends Sunday; near-normal by Mon-Tue.","conf":"PARTIAL"},
+{"d":"0323","sev":"MODERATE","sc":38,"dl":2340,"cx":128,"wp":298200,"apt":[{"c":"ORD","dl":245,"cx":22,"s":"Spring Break/storms"},{"c":"DFW","dl":189,"cx":15,"s":"Thunderstorms"},{"c":"ATL","dl":167,"cx":11,"s":"Weather"}],"cause":"Spring Break week peak + thunderstorm activity across Midwest","ota":"MODERATE","fwd":"Spring Break volume continues through Mar 29.","conf":"PARTIAL"},
+{"d":"0324","sev":"MODERATE","sc":36,"dl":2490,"cx":118,"wp":300620,"apt":[{"c":"ORD","dl":218,"cx":19,"s":"Thunderstorms"},{"c":"ATL","dl":178,"cx":13,"s":"Weather"},{"c":"DFW","dl":156,"cx":10,"s":"Weather"}],"cause":"Spring storms + Spring Break travel + DHS shutdown Day 29","ota":"MODERATE","fwd":"Storm activity continues through weekend.","conf":"PARTIAL"},
+{"d":"0326","sev":"HIGH","sc":56,"dl":4180,"cx":188,"wp":497020,"apt":[{"c":"MCO","dl":367,"cx":33,"s":"Spring Break return"},{"c":"ATL","dl":278,"cx":25,"s":"Storm+volume"},{"c":"ORD","dl":245,"cx":21,"s":"Thunderstorms"}],"cause":"Spring Break return peak + severe storms + TSA staffing shortages","ota":"HIGH","fwd":"Spring Break return surge tapering Mon; storms clearing.","conf":"PARTIAL"},
+{"d":"0328","sev":"HIGH","sc":53,"dl":3890,"cx":178,"wp":471100,"apt":[{"c":"ORD","dl":312,"cx":28,"s":"Spring Break+storms"},{"c":"ATL","dl":267,"cx":19,"s":"Thunderstorms"},{"c":"DFW","dl":234,"cx":16,"s":"Thunderstorms"}],"cause":"Spring Break peak + severe Midwest thunderstorms + TSA staffing shortages","ota":"HIGH","fwd":"Spring Break winds down Apr 1; storm system exits by weekend.","conf":"PARTIAL"},
+{"d":"0330","sev":"MODERATE","sc":40,"dl":2820,"cx":127,"wp":336430,"apt":[{"c":"ORD","dl":245,"cx":20,"s":"Post-Spring Break"},{"c":"ATL","dl":189,"cx":15,"s":"Weather"},{"c":"DFW","dl":165,"cx":11,"s":"Weather"}],"cause":"Post-Spring Break normalization + weather systems + DHS shutdown Day 35","ota":"MODERATE","fwd":"Stable conditions; Easter travel building.","conf":"PARTIAL"},
+{"d":"0331","sev":"MODERATE","sc":38,"dl":2640,"cx":118,"wp":314020,"apt":[{"c":"ORD","dl":228,"cx":18,"s":"Weather"},{"c":"ATL","dl":178,"cx":13,"s":"Weather"},{"c":"DFW","dl":156,"cx":10,"s":"Weather"}],"cause":"Weather systems + DHS shutdown TSA staffing shortages (Day 36)","ota":"MODERATE","fwd":"Easter weekend approaches; expect significant volume build Apr 2-3.","conf":"PARTIAL"},
+{"d":"0401","sev":"MODERATE","sc":45,"dl":3180,"cx":150,"wp":349500,"apt":[{"c":"DFW","dl":278,"cx":25,"s":"Weather+Easter"},{"c":"ORD","dl":245,"cx":20,"s":"Weather"},{"c":"MCO","dl":212,"cx":17,"s":"Easter surge"}],"cause":"Easter travel surge begins + weather systems + DHS shutdown TSA staffing","ota":"MODERATE","fwd":"Easter peak builds through Fri; expect HIGH conditions Apr 3-6.","conf":"PARTIAL"},
+{"d":"0402","sev":"MODERATE","sc":43,"dl":2224,"cx":119,"wp":277510,"apt":[{"c":"ORD","dl":278,"cx":42,"s":"Rain & low clouds + TSA gaps"},{"c":"LGA","dl":245,"cx":17,"s":"Rain & low clouds"},{"c":"JFK","dl":122,"cx":8,"s":"Rain & low clouds"}],"cause":"Spring storms compounded by TSA staffing shortages from ongoing DHS shutdown","ota":"MODERATE","fwd":"TSA back pay flowing via executive order but staffing gaps persist.","conf":"PARTIAL"},
+{"d":"0403","sev":"CRITICAL","sc":88,"dl":6232,"cx":801,"wp":1081530,"apt":[{"c":"ORD","dl":1247,"cx":419,"s":"Thunderstorms, tornado risk"},{"c":"MCO","dl":300,"cx":21,"s":"Thunderstorms"},{"c":"MIA","dl":260,"cx":10,"s":"Network congestion"}],"cause":"Severe thunderstorms & tornado risk at ORD + Easter/Good Friday peak + TSA shutdown","ota":"HIGH","fwd":"Residual delays Sat Apr 4 as ORD repositions aircraft/crews.","conf":"PARTIAL"},
+{"d":"0404","sev":"CRITICAL","sc":82,"dl":5500,"cx":460,"wp":794000,"apt":[{"c":"DEN","dl":323,"cx":15,"s":"Low clouds + runway works"},{"c":"ORD","dl":268,"cx":46,"s":"Storm backlog + Easter surge"},{"c":"LAS","dl":208,"cx":12,"s":"Network ripple effects"}],"cause":"Thunderstorm backlog from Good Friday + Easter Saturday peak volume","ota":"HIGH","fwd":"Easter Sunday return travel will spike demand; ORD backlog may persist 24-48 hrs.","conf":"PARTIAL"},
+{"d":"0405","sev":"CRITICAL","sc":85,"dl":11000,"cx":500,"wp":1315000,"apt":[{"c":"ATL","dl":271,"cx":35,"s":"Severe thunderstorms"},{"c":"ORD","dl":268,"cx":46,"s":"Thunderstorms, FAA ground stops"},{"c":"MIA","dl":150,"cx":25,"s":"Storms & localized flooding"}],"cause":"Severe Easter storms (thunderstorms, heavy rain, flooding) + record holiday passenger volumes","ota":"HIGH","fwd":"Residual disruption Mon-Tue as aircraft/crews reposition.","conf":"PARTIAL"},
+{"d":"0406","sev":"HIGH","sc":72,"dl":4722,"cx":307,"wp":624530,"apt":[{"c":"LGA","dl":262,"cx":28,"s":"Volume + cascade"},{"c":"MIA","dl":265,"cx":9,"s":"Spring break + Easter + cruise"},{"c":"ORD","dl":238,"cx":4,"s":"Residual storm repositioning"}],"cause":"Easter Monday return surge + cascading effects from 4-day storm sequence since Good Friday","ota":"HIGH","fwd":"Disruptions taper Tue-Wed; residual crew imbalances at ATL, ORD, LGA.","conf":"CONFIRMED"},
+{"d":"0407","sev":"HIGH","sc":61,"dl":3022,"cx":191,"wp":396130,"apt":[{"c":"MCO","dl":198,"cx":9,"s":"Storm cascades"},{"c":"MIA","dl":197,"cx":9,"s":"Thunderstorms, FAA ground stop"},{"c":"LAX","dl":128,"cx":10,"s":"Low clouds, volume"}],"cause":"Southeast thunderstorms + post-Easter recovery + DHS shutdown TSA staffing gaps (Day 52)","ota":"HIGH","fwd":"Airlines targeting Wed-Thu for near-normal ops. Residual crew repositioning through Wed AM.","conf":"PARTIAL"},
+{"d":"0408","sev":"HIGH","sc":51,"dl":3440,"cx":114,"wp":383700,"apt":[{"c":"DFW","dl":454,"cx":77,"s":"Storms + AA hub cascade"},{"c":"MIA","dl":384,"cx":6,"s":"Spring thunderstorms"},{"c":"ORD","dl":316,"cx":25,"s":"FAA ground stop, tornado risk"}],"cause":"Post-Easter cascade + Midwest thunderstorms; FAA ground stop at ORD; AA network-wide meltdown","ota":"MODERATE","fwd":"Residual delays Thu as DFW/ORD recover from 6-day cascade.","conf":"PARTIAL"},
+{"d":"0409","sev":"MODERATE","sc":42,"dl":3025,"cx":63,"wp":313200,"apt":[{"c":"ORD","dl":222,"cx":13,"s":"Storm cascade"},{"c":"JFK","dl":201,"cx":6,"s":"NY metro congestion"},{"c":"MCO","dl":198,"cx":9,"s":"South FL storms"}],"cause":"Eastern US spring storms + Washington Dulles ATC facility issue; SFO runway 1R closure","ota":"MODERATE","fwd":"Residual GDPs into Fri AM; SFO runway constraint continues for weeks.","conf":"CONFIRMED"},
+{"d":"0410","sev":"MODERATE","sc":32,"dl":1221,"cx":114,"wp":183990,"apt":[{"c":"ATL","dl":144,"cx":28,"s":"Thunderstorms"},{"c":"EWR","dl":133,"cx":5,"s":"High winds, NE corridor"},{"c":"JFK","dl":127,"cx":12,"s":"High winds"}],"cause":"High winds along NE corridor + thunderstorms in FL/TX","ota":"MODERATE","fwd":"Weather pushing east overnight; residual NE delays Saturday AM.","conf":"PARTIAL"},
+{"d":"0411","sev":"MODERATE","sc":35,"dl":1759,"cx":79,"wp":209660,"apt":[{"c":"LAS","dl":250,"cx":10,"s":"Weather/congestion"},{"c":"MCO","dl":198,"cx":9,"s":"Weather/volume"},{"c":"PHX","dl":163,"cx":2,"s":"Storms"}],"cause":"Spring thunderstorms hitting leisure hubs + post-Easter volume + ATC capacity constraints","ota":"MODERATE","fwd":"DEN high-wind ground stop Sun Apr 12; AA travel waiver for DFW Apr 12.","conf":"PARTIAL"},
+{"d":"0412","sev":"MODERATE","sc":37,"dl":1910,"cx":135,"wp":259650,"apt":[{"c":"DFW","dl":154,"cx":5,"s":"Wind/congestion"},{"c":"ORD","dl":143,"cx":7,"s":"Weather/congestion"},{"c":"ATL","dl":115,"cx":34,"s":"Storms/cascading"}],"cause":"Thunderstorms/high winds across multiple regions + East Coast congestion; DEN ground stop (3 hrs)","ota":"LOW","fwd":"Spring storm pattern continues mid-week; no major system-wide events next 24 hrs.","conf":"PARTIAL"},
+{"d":"0413","sev":"MODERATE","sc":46,"dl":1759,"cx":79,"wp":209660,"apt":[{"c":"FLL","dl":300,"cx":22,"s":"Thunderstorms"},{"c":"ORD","dl":157,"cx":7,"s":"Storms, weather waiver"},{"c":"JFK","dl":156,"cx":8,"s":"Storms, NE weather"}],"cause":"Severe thunderstorms across Central/Eastern US + FAA ATC staffing shortages amid gov shutdown (LAX ground stop)","ota":"MODERATE","fwd":"Storm system shifting east; NE airports elevated risk next 24h. ATC staffing strain continues.","conf":"CONFIRMED"},
+];
+
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DAYS_OF_WEEK=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const DELAY_BASE=5601, CANCEL_BASE=340;
+
+function parseD(d){return new Date(2026,parseInt(d.slice(0,2))-1,parseInt(d.slice(2,4)))}
+function fmtDate(d){const dt=parseD(d);return MONTHS[dt.getMonth()]+' '+dt.getDate()+', 2026'}
+function fmtDay(d){return DAYS_OF_WEEK[parseD(d).getDay()]}
+function fmtNum(n){return n!=null?n.toLocaleString():'—'}
+function scoreColor(sc){if(sc<=25)return'#4caf50';if(sc<=50)return'#ffc107';if(sc<=75)return'#f44336';if(sc<=90)return'#ff5252';return'#ce93d8'}
+
+function getFiltered(){
+  const s=document.getElementById('startDate').value;
+  const e=document.getElementById('endDate').value;
+  const sev=document.getElementById('sevFilter').value;
+  const sd=s?new Date(s):null, ed=e?new Date(e):null;
+  return ALL.filter(r=>{
+    const dt=parseD(r.d);
+    return(!sd||dt>=sd)&&(!ed||dt<=ed)&&(!sev||r.sev===sev);
+  });
+}
+
+// ── Charts ────────────────────────────────────────────────────────────────────
+const chartInst={};
+const BASE_OPTS={
+  responsive:true, maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:'#7a9ab8',font:{size:11}}},
+    tooltip:{backgroundColor:'rgba(13,27,42,.95)',titleColor:'#e0e8f0',bodyColor:'#7a9ab8',borderColor:'#2a3f5c',borderWidth:1}},
+  scales:{
+    x:{ticks:{color:'#7a9ab8',maxRotation:50,font:{size:10}},grid:{color:'rgba(42,63,92,.4)'}},
+    y:{ticks:{color:'#7a9ab8',font:{size:10}},grid:{color:'rgba(42,63,92,.4)'}}
+  }
+};
+
+function mkChart(id,cfg){
+  if(chartInst[id]) chartInst[id].destroy();
+  chartInst[id]=new Chart(document.getElementById(id).getContext('2d'),cfg);
+}
+
+function renderCharts(data){
+  const labels=data.map(r=>{const dt=parseD(r.d);return MONTHS[dt.getMonth()]+' '+dt.getDate();});
+
+  // Score
+  mkChart('chartScore',{type:'line',data:{labels,datasets:[{
+    label:'Disruption Score',data:data.map(r=>r.sc),
+    borderColor:'#2196f3',backgroundColor:'rgba(33,150,243,.1)',
+    fill:true,tension:.35,pointRadius:5,
+    pointBackgroundColor:data.map(r=>scoreColor(r.sc)),
+    pointBorderColor:'rgba(255,255,255,.25)',pointHoverRadius:7,
+    segment:{borderColor:ctx=>scoreColor(ctx.p1.parsed.y)}
+  }]},options:{...BASE_OPTS,scales:{
+    x:BASE_OPTS.scales.x,
+    y:{...BASE_OPTS.scales.y,min:0,max:100,
+      ticks:{...BASE_OPTS.scales.y.ticks,stepSize:25,
+        callback:v=>{const labels={0:'0',25:'NORMAL',50:'MODERATE',75:'HIGH',100:'CRISIS'};return labels[v]!==undefined?labels[v]:v}}}
+  }}});
+
+  // Delays & Cancels
+  mkChart('chartDelays',{type:'bar',data:{labels,datasets:[
+    {label:'Delays',data:data.map(r=>r.dl),backgroundColor:data.map(r=>{
+      const a=r.dl/DELAY_BASE;return a>1.5?'rgba(244,67,54,.8)':a>1?'rgba(255,193,7,.8)':'rgba(33,150,243,.7)';
+    }),borderRadius:3,yAxisID:'y'},
+    {label:'Cancels',data:data.map(r=>r.cx),backgroundColor:'rgba(244,67,54,.6)',borderRadius:3,type:'line',
+      borderColor:'#f44336',pointRadius:4,pointBackgroundColor:'#f44336',fill:false,tension:.3,yAxisID:'y1'},
+  ]},options:{...BASE_OPTS,scales:{
+    x:BASE_OPTS.scales.x,
+    y:{...BASE_OPTS.scales.y,title:{display:true,text:'Delays',color:'#7a9ab8',font:{size:10}}},
+    y1:{position:'right',ticks:{color:'#f44336',font:{size:10}},grid:{drawOnChartArea:false},
+      title:{display:true,text:'Cancels',color:'#f44336',font:{size:10}}}
+  }}});
+
+  // Cancel Rate
+  mkChart('chartRate',{type:'line',data:{labels,datasets:[{
+    label:'Cancel Rate % of Baseline',data:data.map(r=>parseFloat((r.cx/CANCEL_BASE*100).toFixed(1))),
+    borderColor:'#f44336',backgroundColor:'rgba(244,67,54,.1)',
+    fill:true,tension:.35,pointRadius:4,pointBackgroundColor:'#f44336',
+  }]},options:{...BASE_OPTS,scales:{
+    x:BASE_OPTS.scales.x,
+    y:{...BASE_OPTS.scales.y,title:{display:true,text:'% of Baseline',color:'#7a9ab8',font:{size:10}},
+      ticks:{...BASE_OPTS.scales.y.ticks,callback:v=>v+'%'}}
+  }}});
+
+  // Wtd Passengers
+  mkChart('chartPax',{type:'line',data:{labels,datasets:[{
+    label:'Weighted Passengers Impacted',data:data.map(r=>r.wp),
+    borderColor:'#ce93d8',backgroundColor:'rgba(123,31,162,.12)',
+    fill:true,tension:.35,pointRadius:4,pointBackgroundColor:'#ce93d8',
+  }]},options:{...BASE_OPTS,scales:{
+    x:BASE_OPTS.scales.x,
+    y:{...BASE_OPTS.scales.y,title:{display:true,text:'Passengers',color:'#7a9ab8',font:{size:10}},
+      ticks:{...BASE_OPTS.scales.y.ticks,callback:v=>v>=1000000?(v/1000000).toFixed(1)+'M':v>=1000?(v/1000).toFixed(0)+'K':v}}
+  }}});
+}
+
+// ── KPIs ───────────────────────────────────────────────────────────────────────
+function renderKPIs(data){
+  const n=data.length;
+  const dl=data.reduce((s,r)=>s+r.dl,0);
+  const cx=data.reduce((s,r)=>s+r.cx,0);
+  const wp=data.reduce((s,r)=>s+r.wp,0);
+  const sc=n?Math.round(data.reduce((s,r)=>s+r.sc,0)/n*10)/10:0;
+  const peak=n?Math.max(...data.map(r=>r.sc)):0;
+  const hi=data.filter(r=>['HIGH','CRITICAL','CRISIS'].includes(r.sev)).length;
+  const otaHi=data.filter(r=>['HIGH','CRITICAL','CRISIS'].includes(r.ota||'')).length;
+  document.getElementById('k-days').textContent=n;
+  document.getElementById('k-dl').textContent=fmtNum(dl);
+  document.getElementById('k-dl-avg').textContent=n?'avg '+fmtNum(Math.round(dl/n))+'/day':'';
+  document.getElementById('k-cx').textContent=fmtNum(cx);
+  document.getElementById('k-cx-avg').textContent=n?'avg '+fmtNum(Math.round(cx/n))+'/day':'';
+  document.getElementById('k-wp').textContent=n?(wp/1000000).toFixed(1)+'M':'—';
+  document.getElementById('k-sc').textContent=sc||'—';
+  document.getElementById('k-sc-peak').textContent=peak?'peak '+peak:'';
+  document.getElementById('k-hi').textContent=hi;
+  document.getElementById('k-ota').textContent=otaHi?otaHi+' days OTA HIGH+':'';
+  document.getElementById('rec-count').textContent=ALL.length;
+  const banner=document.getElementById('alertBanner');
+  const crit=data.filter(r=>['CRITICAL','CRISIS'].includes(r.sev));
+  if(crit.length){banner.className='alert show hi';document.getElementById('alertText').innerHTML='<strong>'+crit.length+' CRITICAL/CRISIS day'+(crit.length>1?'s':'')+' in period:</strong> '+crit.map(r=>fmtDate(r.d)+' (Score '+r.sc+')').join(' · ')+'. Elevated OTA contact volume expected.';}
+  else banner.className='alert';
+}
+
+// ── Table ────────────────────────────────────────────────────────────────────
+function renderTable(data){
+  const body=document.getElementById('tBody');
+  const foot=document.getElementById('tFoot');
+  if(!data.length){body.innerHTML='<tr><td colspan="11"><div class="empty"><div class="empty-icon">🛫</div><div>No data for selected range</div></div></td></tr>';foot.innerHTML='';return;}
+  body.innerHTML=data.map(r=>{
+    const apts=(r.apt||[]).slice(0,3).map(a=>`<span class="apt-chip">${a.c} <span style="color:var(--text-dim);font-weight:400">${a.dl}d</span></span>`).join('');
+    const sc_col=scoreColor(r.sc);
+    return `<tr onclick="toggleDetail('${r.d}')" id="row-${r.d}">
+      <td class="dt-cell">${fmtDate(r.d)}</td>
+      <td class="dy-cell">${fmtDay(r.d)}</td>
+      <td><span class="sv sv-${r.sev}"><span class="dot" style="background:${sc_col}"></span>${r.sev}</span></td>
+      <td><div class="sc-wrap"><span class="sc-num" style="color:${sc_col}">${r.sc}</span><div class="sc-bar"><div class="sc-fill" style="width:${Math.min(100,r.sc)}%;background:${sc_col};opacity:.75"></div></div></div></td>
+      <td class="num-r">${fmtNum(r.dl)}<br><span class="num-s">${(r.dl/DELAY_BASE*100).toFixed(1)}%</span></td>
+      <td class="num-r">${fmtNum(r.cx)}<br><span class="num-s">${(r.cx/CANCEL_BASE*100).toFixed(1)}%</span></td>
+      <td class="num-r">${(r.wp/1000).toFixed(0)}K</td>
+      <td>${apts}</td>
+      <td class="cause-c">${r.cause||'—'}</td>
+      <td><span class="sv sv-${r.ota||'MODERATE'}">${r.ota||'—'}</span></td>
+      <td class="fwd-c">${r.fwd||'—'}</td>
+    </tr>
+    <tr class="det-row" id="detail-${r.d}"><td colspan="11" style="padding:0 10px 8px">
+      <div class="det-panel">
+        <div>
+          <div class="det-sec-title">📊 Metrics</div>
+          <div class="det-item"><span class="det-lbl">Score</span><span class="det-val" style="color:${sc_col}">${r.sc}/100</span></div>
+          <div class="det-item"><span class="det-lbl">Delays</span><span class="det-val">${fmtNum(r.dl)}</span></div>
+          <div class="det-item"><span class="det-lbl">Cancellations</span><span class="det-val">${fmtNum(r.cx)}</span></div>
+          <div class="det-item"><span class="det-lbl">vs. Delay Baseline</span><span class="det-val">${(r.dl/DELAY_BASE*100).toFixed(1)}%</span></div>
+          <div class="det-item"><span class="det-lbl">vs. Cancel Baseline</span><span class="det-val">${(r.cx/CANCEL_BASE*100).toFixed(1)}%</span></div>
+          <div class="det-item"><span class="det-lbl">Wtd. Passengers</span><span class="det-val">${fmtNum(r.wp)}</span></div>
+          <div class="det-item"><span class="det-lbl">Confidence</span><span class="det-val">${r.conf||'—'}</span></div>
+        </div>
+        <div>
+          <div class="det-sec-title">🛬 Airport Breakdown</div>
+          ${(r.apt||[]).map(a=>`<div class="det-item"><span class="det-lbl"><span class="apt-chip">${a.c}</span>${a.s?'<span style="color:var(--text-dim);font-size:10px;margin-left:4px">'+a.s.substring(0,20)+'</span>':''}</span><span class="det-val">${a.dl}d / ${a.cx}c</span></div>`).join('')}
+        </div>
+        <div>
+          <div class="det-sec-title">📋 OTA Intelligence</div>
+          <div class="det-item"><span class="det-lbl">OTA Risk</span><span class="det-val"><span class="sv sv-${r.ota}">${r.ota||'—'}</span></span></div>
+          <div style="margin-top:10px"><div class="det-sec-title">🔍 Primary Cause</div><div style="color:var(--text);font-size:11px;line-height:1.6">${r.cause||'—'}</div></div>
+          <div style="margin-top:10px"><div class="det-sec-title">🔭 Forward Look</div><div style="color:var(--text-dim);font-size:11px;line-height:1.6">${r.fwd||'—'}</div></div>
+        </div>
+      </div>
+    </td></tr>`;
+  }).join('');
+  const totDl=data.reduce((s,r)=>s+r.dl,0),totCx=data.reduce((s,r)=>s+r.cx,0),totWp=data.reduce((s,r)=>s+r.wp,0);
+  const avgSc=data.length?Math.round(data.reduce((s,r)=>s+r.sc,0)/data.length*10)/10:0;
+  const hiD=data.filter(r=>['HIGH','CRITICAL','CRISIS'].includes(r.sev)).length;
+  foot.innerHTML=`<tr class="tot-row">
+    <td colspan="2" style="color:var(--accent2);font-size:11px">PERIOD TOTALS<br><span style="color:var(--text-dim)">${data.length} days</span></td>
+    <td></td>
+    <td><span style="color:${scoreColor(avgSc)}">${avgSc}</span><br><span style="font-size:10px;color:var(--text-dim)">avg</span></td>
+    <td class="num-r">${fmtNum(totDl)}<br><span class="num-s">avg ${fmtNum(Math.round(totDl/data.length))}/d</span></td>
+    <td class="num-r">${fmtNum(totCx)}<br><span class="num-s">avg ${fmtNum(Math.round(totCx/data.length))}/d</span></td>
+    <td class="num-r">${(totWp/1000000).toFixed(2)}M</td>
+    <td colspan="4" style="color:var(--text-dim);font-size:11px">${hiD} HIGH+ days · ${data.filter(r=>['CRITICAL','CRISIS'].includes(r.sev)).length} CRITICAL/CRISIS · OTA elevated ${data.filter(r=>['HIGH','CRITICAL','CRISIS'].includes(r.ota||'')).length} days</td>
+  </tr>`;
+}
+
+function toggleDetail(d){
+  const isOpen=document.getElementById('detail-'+d).classList.contains('open');
+  document.querySelectorAll('.det-row').forEach(r=>r.classList.remove('open'));
+  document.querySelectorAll('tbody tr:not(.det-row)').forEach(r=>r.classList.remove('sel'));
+  if(!isOpen){document.getElementById('detail-'+d).classList.add('open');document.getElementById('row-'+d).classList.add('sel');}
+}
+
+function switchTab(name,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  el.classList.add('active');
+  if(['score','delays','rate','pax'].includes(name)) renderCharts(getFiltered());
+}
+
+function setRange(days,el){
+  document.querySelectorAll('.qbtn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  const end=new Date('2026-04-13');
+  const start=days===0?new Date('2026-02-28'):new Date(end-(days-1)*86400000);
+  document.getElementById('endDate').value=end.toISOString().slice(0,10);
+  document.getElementById('startDate').value=start.toISOString().slice(0,10);
+  refresh();
+}
+
+function refresh(){
+  const data=getFiltered();
+  renderKPIs(data);
+  renderTable(data);
+  const active=document.querySelector('.tab.active');
+  if(active){const n=document.querySelector('.panel.active').id.replace('panel-','');if(['score','delays','rate','pax'].includes(n))renderCharts(data);}
+}
+
+function exportCSV(){
+  const data=getFiltered();
+  const hdr=['Date','Day','Severity','Score','Delays','Cancels','WtdPax','Delay%Baseline','Cancel%Baseline','Cause','OTA_Risk','Forward_Look','Confidence'];
+  const rows=data.map(r=>[fmtDate(r.d),fmtDay(r.d),r.sev,r.sc,r.dl,r.cx,r.wp,(r.dl/DELAY_BASE*100).toFixed(1)+'%',(r.cx/CANCEL_BASE*100).toFixed(1)+'%','"'+(r.cause||'').replace(/"/g,'""')+'"',r.ota,'"'+(r.fwd||'').replace(/"/g,'""')+'"',r.conf]);
+  const csv=[hdr.join(','),...rows.map(r=>r.join(','))].join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download='aviation_'+document.getElementById('startDate').value+'_to_'+document.getElementById('endDate').value+'.csv';
+  a.click();
+}
+
+refresh();
+</script>
+</body>
+</html>
