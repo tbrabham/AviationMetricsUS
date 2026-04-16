@@ -128,6 +128,28 @@ tbody td{padding:9px 11px;vertical-align:top;border-bottom:1px solid rgba(42,63,
 ::-webkit-scrollbar-track{background:var(--navy)}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 ::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+
+/* ── Score Info Modal ── */
+.info-btn{background:none;border:1px solid rgba(33,150,243,.35);border-radius:50%;width:15px;height:15px;font-size:9px;color:var(--accent2);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;margin-left:5px;vertical-align:middle;transition:all .15s;line-height:1;padding:0}
+.info-btn:hover{background:rgba(33,150,243,.2);border-color:var(--accent)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--navy2);border:1px solid var(--border);border-radius:12px;width:min(560px,94vw);max-height:90vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.6)}
+.modal-hdr{padding:16px 20px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-size:14px;font-weight:700;color:#fff}
+.modal-close{background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;line-height:1;padding:0 4px}
+.modal-close:hover{color:var(--text)}
+.modal-body{padding:18px 20px 20px}
+.score-formula{background:var(--navy3);border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-family:monospace;font-size:12px;color:var(--accent2);line-height:2;margin:12px 0}
+.thresh-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0}
+.thresh-card{border-radius:7px;padding:10px 8px;text-align:center;border:1px solid rgba(255,255,255,.07)}
+.thresh-range{font-size:11px;font-weight:700;margin-bottom:4px}
+.thresh-lbl{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.modal-sec{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--accent2);margin:16px 0 7px;border-bottom:1px solid rgba(33,150,243,.15);padding-bottom:4px}
+.modal-p{font-size:12.5px;color:var(--text-dim);line-height:1.7}
+.modal-p strong{color:var(--text)}
+.ota-row{display:flex;align-items:flex-start;gap:10px;margin:6px 0;font-size:12px}
+.ota-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
 </style>
 </head>
 <body>
@@ -192,11 +214,69 @@ tbody td{padding:9px 11px;vertical-align:top;border-bottom:1px solid rgba(42,63,
   <div class="kpi"><div class="kpi-val" id="k-dl" style="color:#ffc107">—</div><div class="kpi-lbl">Total Delays</div><div class="kpi-sub" id="k-dl-avg"></div></div>
   <div class="kpi"><div class="kpi-val" id="k-cx" style="color:#f44336">—</div><div class="kpi-lbl">Total Cancels</div><div class="kpi-sub" id="k-cx-avg"></div></div>
   <div class="kpi"><div class="kpi-val" id="k-wp" style="color:#ce93d8">—</div><div class="kpi-lbl">Wtd. Pax Impacted</div></div>
-  <div class="kpi"><div class="kpi-val" id="k-sc" style="color:#ffc107">—</div><div class="kpi-lbl">Avg Score</div><div class="kpi-sub" id="k-sc-peak"></div></div>
+  <div class="kpi"><div class="kpi-val" id="k-sc" style="color:#ffc107">—</div><div class="kpi-lbl">Avg Score <button class="info-btn" onclick="document.getElementById('scoreModal').classList.add('open')" title="How is the score calculated?">ℹ</button></div><div class="kpi-sub" id="k-sc-peak"></div></div>
   <div class="kpi"><div class="kpi-val" id="k-hi" style="color:#f44336">—</div><div class="kpi-lbl">HIGH+ Days</div><div class="kpi-sub" id="k-ota"></div></div>
 </div>
 
 <div class="alert" id="alertBanner"><span>⚠️</span><span id="alertText"></span></div>
+
+<!-- ── Disruption Score Explainer Modal ─────────────────────────────────── -->
+<div class="modal-overlay" id="scoreModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <div class="modal-hdr">
+      <span class="modal-title">📊 What is the Disruption Score?</span>
+      <button class="modal-close" onclick="document.getElementById('scoreModal').classList.remove('open')">×</button>
+    </div>
+    <div class="modal-body">
+
+      <p class="modal-p">The disruption score is a <strong>0–100 daily severity index</strong> that combines flight delay volume, cancellation rate, and active FAA ground programs into a single number — making it easy to compare days and spot trends at a glance.</p>
+
+      <div class="modal-sec">Formula</div>
+      <div class="score-formula">
+        Score = (delays ÷ 5,601 baseline) × 28<br>
+              + (cancels ÷ 340 baseline)  × 38<br>
+              + (ground stops)            ×  8<br>
+              + (ground delay programs)   ×  4<br>
+        <span style="color:var(--text-dim)">── capped at 100 ──────────────────</span>
+      </div>
+
+      <div class="modal-sec">Severity Thresholds</div>
+      <div class="thresh-grid">
+        <div class="thresh-card" style="background:rgba(76,175,80,.1);border-color:rgba(76,175,80,.3)">
+          <div class="thresh-range" style="color:#4caf50">0 – 25</div>
+          <div class="thresh-lbl" style="color:#4caf50">Normal</div>
+        </div>
+        <div class="thresh-card" style="background:rgba(255,193,7,.1);border-color:rgba(255,193,7,.3)">
+          <div class="thresh-range" style="color:#ffc107">26 – 50</div>
+          <div class="thresh-lbl" style="color:#ffc107">Moderate</div>
+        </div>
+        <div class="thresh-card" style="background:rgba(244,67,54,.1);border-color:rgba(244,67,54,.3)">
+          <div class="thresh-range" style="color:#f44336">51 – 75</div>
+          <div class="thresh-lbl" style="color:#f44336">High</div>
+        </div>
+        <div class="thresh-card" style="background:rgba(198,40,40,.15);border-color:rgba(244,67,54,.5)">
+          <div class="thresh-range" style="color:#ff5252">76 – 90</div>
+          <div class="thresh-lbl" style="color:#ff5252">Critical</div>
+        </div>
+        <div class="thresh-card" style="background:rgba(123,31,162,.15);border-color:rgba(123,31,162,.5)">
+          <div class="thresh-range" style="color:#ce93d8">91 – 100</div>
+          <div class="thresh-lbl" style="color:#ce93d8">Crisis</div>
+        </div>
+      </div>
+
+      <div class="modal-sec">What Each Level Means for OTA Workforce</div>
+      <div class="ota-row"><div class="ota-dot" style="background:#4caf50"></div><div><strong style="color:#4caf50">Normal (0–25)</strong> — <span style="color:var(--text-dim)">Routine background delays. Standard staffing. No proactive action needed.</span></div></div>
+      <div class="ota-row"><div class="ota-dot" style="background:#ffc107"></div><div><strong style="color:#ffc107">Moderate (26–50)</strong> — <span style="color:var(--text-dim)">Elevated delays across 1–2 hubs. Expect a modest contact volume uptick. Monitor closely.</span></div></div>
+      <div class="ota-row"><div class="ota-dot" style="background:#f44336"></div><div><strong style="color:#f44336">High (51–75)</strong> — <span style="color:var(--text-dim)">Major storm or multi-hub event. Significant rebooking demand. Consider staffing up.</span></div></div>
+      <div class="ota-row"><div class="ota-dot" style="background:#ff5252"></div><div><strong style="color:#ff5252">Critical (76–90)</strong> — <span style="color:var(--text-dim)">System-wide disruption. High cancellation rate. Proactive customer outreach recommended.</span></div></div>
+      <div class="ota-row"><div class="ota-dot" style="background:#ce93d8"></div><div><strong style="color:#ce93d8">Crisis (91–100)</strong> — <span style="color:var(--text-dim)">Extreme event (e.g. Easter 2026 storm sequence). All-hands response. Expect wave of contacts 24–48 hrs.</span></div></div>
+
+      <div class="modal-sec">Important Note</div>
+      <p class="modal-p">The score is a <strong>directional risk signal</strong>, not a precise operational metric. It's most useful for day-over-day comparison and early-warning staffing decisions. Daily data is sourced from the <strong>FAA NAS Status API</strong> and reflects morning conditions — end-of-day totals may differ.</p>
+
+    </div>
+  </div>
+</div>
 
 <!-- DATA TAB -->
 <div class="panel active" id="panel-data">
