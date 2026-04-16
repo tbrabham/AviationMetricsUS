@@ -180,9 +180,9 @@ tbody td{padding:9px 11px;vertical-align:top;border-bottom:1px solid rgba(42,63,
 <div class="controls">
   <div style="display:flex;align-items:center;gap:7px">
     <span class="ctrl-label">From</span>
-    <input type="date" class="date-input" id="startDate" value="2026-03-30" onchange="refresh()">
+    <input type="date" class="date-input" id="startDate" onchange="refresh()">
     <span class="ctrl-label">To</span>
-    <input type="date" class="date-input" id="endDate" value="2026-04-13" onchange="refresh()">
+    <input type="date" class="date-input" id="endDate" onchange="refresh()">
   </div>
   <div class="div-v"></div>
   <div style="display:flex;align-items:center;gap:7px">
@@ -627,8 +627,9 @@ function switchTab(name,el){
 function setRange(days,el){
   document.querySelectorAll('.qbtn').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
-  const end=new Date('2026-04-13');
-  const start=days===0?new Date('2026-02-28'):new Date(end-(days-1)*86400000);
+  const end=new Date();   // always today
+  const allStart=ALL.length?parseD(ALL[0].d):new Date(end-(29)*86400000);
+  const start=days===0?allStart:new Date(end-(days-1)*86400000);
   document.getElementById('endDate').value=end.toISOString().slice(0,10);
   document.getElementById('startDate').value=start.toISOString().slice(0,10);
   refresh();
@@ -652,6 +653,15 @@ function exportCSV(){
   a.download='aviation_'+document.getElementById('startDate').value+'_to_'+document.getElementById('endDate').value+'.csv';
   a.click();
 }
+
+// ── Set date inputs to today (end) and 15 days ago (start) dynamically ───────
+function initDates(){
+  const today=new Date();
+  const start=new Date(today-(14)*86400000);
+  document.getElementById('endDate').value=today.toISOString().slice(0,10);
+  document.getElementById('startDate').value=start.toISOString().slice(0,10);
+}
+initDates();
 
 // ── Load from aviation_data.json if hosted on GitHub Pages ──────────────────
 fetch('aviation_data.json')
