@@ -111,18 +111,6 @@ tbody td{padding:9px 11px;vertical-align:top;border-bottom:1px solid rgba(42,63,
 .empty{text-align:center;padding:50px;color:var(--text-dim)}
 .empty-icon{font-size:40px;margin-bottom:12px;opacity:.4}
 
-/* Storage panel */
-.store-wrap{padding:0 24px 20px}
-.store-panel{background:var(--navy2);border:1px solid var(--border);border-radius:10px;overflow:hidden}
-.store-hdr{background:var(--navy3);padding:11px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--accent2);border-bottom:1px solid var(--border)}
-.store-body{padding:14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
-.opt{border:1px solid var(--border);border-radius:8px;padding:14px;position:relative}
-.opt.rec{border-color:var(--accent)}
-.opt-badge{position:absolute;top:-9px;left:10px;background:var(--accent);color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:9px;letter-spacing:.4px;text-transform:uppercase}
-.opt-title{font-weight:700;margin-bottom:6px;font-size:12.5px}
-.opt-desc{font-size:11px;color:var(--text-dim);line-height:1.6}
-.pro{color:#4caf50;font-size:10px;margin-top:6px}
-.con{color:#f44336;font-size:10px}
 
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:var(--navy)}
@@ -174,7 +162,6 @@ tbody td{padding:9px 11px;vertical-align:top;border-bottom:1px solid rgba(42,63,
   <div class="tab" onclick="switchTab('delays',this)">✈ Delays &amp; Cancels</div>
   <div class="tab" onclick="switchTab('rate',this)">% Cancel Rate</div>
   <div class="tab" onclick="switchTab('pax',this)">👥 Wtd. Passengers</div>
-  <div class="tab" onclick="switchTab('overview',this)">🗄 Data Setup</div>
 </div>
 
 <div class="controls">
@@ -342,54 +329,6 @@ tbody td{padding:9px 11px;vertical-align:top;border-bottom:1px solid rgba(42,63,
         <span class="chart-meta">Formula: (cancels × 650) + (delays × 90)</span>
       </div>
       <div class="chart-body" style="height:320px"><canvas id="chartPax"></canvas></div>
-    </div>
-  </div>
-</div>
-
-<!-- DATA SETUP TAB -->
-<div class="panel" id="panel-overview">
-  <div style="padding:16px 24px 10px">
-    <div class="store-panel">
-      <div class="store-hdr">🗄 Data Storage Options — Where to Host Your Raw Data</div>
-      <div class="store-body">
-        <div class="opt rec">
-          <div class="opt-badge">⭐ Recommended</div>
-          <div class="opt-title">🐙 GitHub Pages + JSON</div>
-          <div class="opt-desc"><strong>Cost: Free</strong> for a public repo. Anyone with the URL views the live page — no login required. Your <code>aviation_data.json</code> lives in a GitHub repo. This HTML file fetches it via the raw URL. Your daily Cowork task auto-commits each morning.<br><br>For a private link (restricted viewers), GitHub Pro is $4/month.</div>
-          <div class="pro">✓ Zero cost · Full version history · No server</div>
-          <div class="pro">✓ Share a URL — viewers need no accounts</div>
-          <div class="pro">✓ Works directly with your existing JSON workflow</div>
-          <div class="con">✗ Raw data is publicly visible on free tier</div>
-        </div>
-        <div class="opt">
-          <div class="opt-title">⚡ Supabase (Free Tier)</div>
-          <div class="opt-desc"><strong>Cost: Free</strong> up to 500MB / 50k rows. PostgreSQL database with auto-generated REST API. Each daily record = one row. The dashboard queries by date range via a simple fetch URL. Supabase provides a web UI to view and manage all data.</div>
-          <div class="pro">✓ Private by default · Real database · Secure</div>
-          <div class="pro">✓ Scales well · Easy filtering server-side</div>
-          <div class="con">✗ Requires setup · Daily task must POST to API</div>
-          <div class="con">✗ More moving parts than simple JSON</div>
-        </div>
-        <div class="opt">
-          <div class="opt-title">💻 Local Python Server</div>
-          <div class="opt-desc"><strong>Cost: Free</strong>. Run one command on your computer — Python serves the JSON to the browser. Fully offline, instantly current, no cloud dependency. One command: <code>python3 -m http.server 8080</code></div>
-          <div class="pro">✓ Zero setup · Fully offline · Instant updates</div>
-          <div class="pro">✓ Data never leaves your machine</div>
-          <div class="con">✗ Server must be running each session</div>
-          <div class="con">✗ Not shareable with external users</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div style="padding:0 24px 20px">
-    <div class="store-panel">
-      <div class="store-hdr">🔌 How the Live GitHub Pages Version Would Work</div>
-      <div style="padding:14px 16px;font-size:12px;line-height:2;color:var(--text-dim)">
-        <strong style="color:var(--text)">Step 1:</strong> Create a free GitHub account → New repo → upload <code style="color:var(--accent2)">aviation_data.json</code> and this HTML file.<br>
-        <strong style="color:var(--text)">Step 2:</strong> Enable GitHub Pages in Settings → site goes live at <code style="color:var(--accent2)">https://yourusername.github.io/aviation-dashboard/</code><br>
-        <strong style="color:var(--text)">Step 3:</strong> Change the data source in this file from the embedded array to <code style="color:var(--accent2)">fetch('aviation_data.json').then(...)</code> — one line change.<br>
-        <strong style="color:var(--text)">Step 4:</strong> A scheduled Cowork task appends each new daily record and runs <code style="color:var(--accent2)">git commit + push</code>. Dashboard refreshes within minutes.<br>
-        <strong style="color:var(--text)">Sharing:</strong> Send anyone the GitHub Pages URL. They see the live dashboard in any browser — no login, no install, works on phone or desktop.
-      </div>
     </div>
   </div>
 </div>
