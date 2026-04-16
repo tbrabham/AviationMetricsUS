@@ -199,12 +199,16 @@ def github_put(path, content_str, sha, message):
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 def main():
+    # DATE_OFFSET: 0 = today (noon run), 1 = yesterday (9 AM run to finalize prior day)
+    date_offset = int(os.environ.get("DATE_OFFSET", "0"))
+
     # Use Central time (UTC-5 CDT / UTC-6 CST)
     utc_now    = datetime.now(timezone.utc)
-    central    = utc_now - timedelta(hours=5)   # CDT; switch to 6 in Nov
+    central    = utc_now - timedelta(hours=5) - timedelta(days=date_offset)
     today_d    = central.strftime("%m%d")
 
-    print(f"▶  Aviation daily update — {central.strftime('%Y-%m-%d %H:%M')} CT")
+    run_label  = "FINALIZE YESTERDAY" if date_offset == 1 else "CAPTURE TODAY"
+    print(f"▶  Aviation update [{run_label}] — targeting {central.strftime('%Y-%m-%d')} CT")
     print("   Fetching FAA NAS Status...")
     faa_data   = fetch_faa_status()
 
