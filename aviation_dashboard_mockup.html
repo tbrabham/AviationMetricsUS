@@ -496,7 +496,8 @@ function renderTable(data){
   const foot=document.getElementById('tFoot');
   if(!data.length){body.innerHTML='<tr><td colspan="11"><div class="empty"><div class="empty-icon">🛫</div><div>No data for selected range</div></div></td></tr>';foot.innerHTML='';return;}
   body.innerHTML=data.map(r=>{
-    const apts=(r.apt||[]).slice(0,3).map(a=>`<span class="apt-chip">${a.c} <span style="color:var(--text-dim);font-weight:400">${a.dl}d</span></span>`).join('');
+    const aptList=(r.apt||[]).slice(0,3);
+    const apts=aptList.length?aptList.map(a=>`<span class="apt-chip">${a.c} <span style="color:var(--text-dim);font-weight:400">${a.dl}d</span></span>`).join(''):'<span style="color:var(--text-dim);font-size:11px">No active programs</span>';
     const sc_col=scoreColor(r.sc);
     return `<tr onclick="toggleDetail('${r.d}')" id="row-${r.d}">
       <td class="dt-cell">${fmtDate(r.d)}</td>

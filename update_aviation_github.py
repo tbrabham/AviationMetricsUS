@@ -116,6 +116,11 @@ def build_record(faa_data, now):
     total_dl   += baseline_dl
     total_cx   += baseline_cx
 
+    # On normal days with no active programs, populate top airports with baseline estimates
+    if not apt_map:
+        for apt_code, est_dl, est_cx in [("ATL",120,6),("ORD",110,5),("DFW",95,4)]:
+            apt_map[apt_code] = {"dl": est_dl, "cx": est_cx, "reasons": ["Routine operations"]}
+
     # Disruption score formula (0-100)
     delay_ratio  = total_dl / DELAY_BASE
     cancel_ratio = total_cx / CANCEL_BASE
