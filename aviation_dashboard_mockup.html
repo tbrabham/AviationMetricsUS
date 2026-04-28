@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>â US Aviation Disruption Intelligence | OTA Workforce Dashboard</title>
+<title>Ã¢ÂÂ US Aviation Disruption Intelligence | OTA Workforce Dashboard</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root {
@@ -14,7 +14,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--navy);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;font-size:14px}
 
-/* ââ Header ââ */
+/* Ã¢ÂÂÃ¢ÂÂ Header Ã¢ÂÂÃ¢ÂÂ */
 .header{background:linear-gradient(135deg,#0a1628,#162850 50%,#0a1628);border-bottom:2px solid var(--accent);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 20px rgba(0,0,0,.5)}
 .header-left{display:flex;align-items:center;gap:12px}
 .header-icon{font-size:26px}
@@ -23,13 +23,13 @@ body{background:var(--navy);color:var(--text);font-family:'Segoe UI',system-ui,s
 .header-actions{display:flex;gap:8px;align-items:center}
 .badge{background:rgba(33,150,243,.2);border:1px solid var(--accent);border-radius:20px;padding:3px 11px;font-size:11px;color:var(--accent2);font-weight:600}
 
-/* ââ Tabs ââ */
+/* Ã¢ÂÂÃ¢ÂÂ Tabs Ã¢ÂÂÃ¢ÂÂ */
 .tabs{background:var(--navy2);border-bottom:1px solid var(--border);display:flex;gap:0;padding:0 24px;overflow-x:auto}
 .tab{padding:10px 18px;font-size:12px;font-weight:600;color:var(--text-dim);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
 .tab:hover{color:var(--text)}
 .tab.active{color:var(--accent2);border-bottom-color:var(--accent)}
 
-/* ââ Controls ââ */
+/* Ã¢ÂÂÃ¢ÂÂ Controls Ã¢ÂÂÃ¢ÂÂ */
 .controls{background:var(--navy2);border-bottom:1px solid var(--border);padding:11px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .ctrl-label{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text-dim);font-weight:600}
 .date-input,.sel{background:var(--navy3);border:1px solid var(--border);border-radius:5px;color:var(--text);padding:6px 10px;font-size:12px;outline:none;cursor:pointer;transition:border-color .2s}
@@ -42,7 +42,7 @@ body{background:var(--navy);color:var(--text);font-family:'Segoe UI',system-ui,s
 .qbtn:hover,.qbtn.active{background:rgba(33,150,243,.15);border-color:var(--accent);color:var(--accent2)}
 .div-v{width:1px;height:24px;background:var(--border)}
 
-/* ââ KPI Strip ââ */
+/* Ã¢ÂÂÃ¢ÂÂ KPI Strip Ã¢ÂÂÃ¢ÂÂ */
 .kpis{display:flex;background:var(--navy2);border-bottom:1px solid var(--border)}
 .kpi{flex:1;padding:10px 14px;text-align:center;border-right:1px solid var(--border)}
 .kpi:last-child{border-right:none}
@@ -50,16 +50,16 @@ body{background:var(--navy);color:var(--text);font-family:'Segoe UI',system-ui,s
 .kpi-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--text-dim);margin-top:2px;font-weight:600}
 .kpi-sub{font-size:11px;color:var(--text-dim);margin-top:1px}
 
-/* ââ Alert Banner ââ */
+/* Ã¢ÂÂÃ¢ÂÂ Alert Banner Ã¢ÂÂÃ¢ÂÂ */
 .alert{margin:10px 24px 0;border-radius:7px;padding:9px 14px;font-size:12px;display:none;align-items:flex-start;gap:9px;border-left:3px solid;line-height:1.5}
 .alert.show{display:flex}
 .alert.hi{background:rgba(244,67,54,.1);border-color:#f44336}
 
-/* ââ Tab Panels ââ */
+/* Ã¢ÂÂÃ¢ÂÂ Tab Panels Ã¢ÂÂÃ¢ÂÂ */
 .panel{display:none}
 .panel.active{display:block}
 
-/* ââ Charts ââ */
+/* Ã¢ÂÂÃ¢ÂÂ Charts Ã¢ÂÂÃ¢ÂÂ */
 .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:16px 24px}
 .chart-card{background:var(--navy2);border:1px solid var(--border);border-radius:10px;overflow:hidden}
 .chart-header{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
@@ -67,7 +67,7 @@ body{background:var(--navy);color:var(--text);font-family:'Segoe UI',system-ui,s
 .chart-meta{font-size:10px;color:var(--text-dim)}
 .chart-body{padding:14px;position:relative;height:250px}
 
-/* ââ Data Table ââ */
+/* Ã¢ÂÂÃ¢ÂÂ Data Table Ã¢ÂÂÃ¢ÂÂ */
 .table-wrap{padding:12px 24px;overflow-x:auto}
 table{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px}
 thead th{background:var(--navy3);color:var(--text-dim);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:9px 11px;text-align:left;border-bottom:2px solid var(--accent);white-space:nowrap;position:sticky;top:0;z-index:5}
@@ -117,7 +117,7 @@ tbody td{padding:9px 11px;vertical-align:top;border-bottom:1px solid rgba(42,63,
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 ::-webkit-scrollbar-thumb:hover{background:var(--accent)}
 
-/* ââ Score Info Modal ââ */
+/* Ã¢ÂÂÃ¢ÂÂ Score Info Modal Ã¢ÂÂÃ¢ÂÂ */
 .info-btn{background:none;border:1px solid rgba(33,150,243,.35);border-radius:50%;width:15px;height:15px;font-size:9px;color:var(--accent2);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;margin-left:5px;vertical-align:middle;transition:all .15s;line-height:1;padding:0}
 .info-btn:hover{background:rgba(33,150,243,.2);border-color:var(--accent)}
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:1000;align-items:center;justify-content:center}
@@ -144,24 +144,24 @@ tbody td{padding:9px 11px;vertical-align:top;border-bottom:1px solid rgba(42,63,
 
 <div class="header">
   <div class="header-left">
-    <div class="header-icon">â</div>
+    <div class="header-icon">Ã¢ÂÂ</div>
     <div>
       <div class="header-title">US Aviation Disruption Intelligence Dashboard</div>
-      <div class="header-sub">OTA Workforce Management Â· Real-Time Disruption Analysis</div>
+      <div class="header-sub">OTA Workforce Management ÃÂ· Real-Time Disruption Analysis</div>
     </div>
   </div>
   <div class="header-actions">
-    <div class="badge">â¬¤ LIVE DATA</div>
-    <button class="btn btn-outline" onclick="exportCSV()" style="font-size:11px;padding:5px 12px">â¬ Export CSV</button>
+    <div class="badge">Ã¢Â¬Â¤ LIVE DATA</div>
+    <button class="btn btn-outline" onclick="exportCSV()" style="font-size:11px;padding:5px 12px">Ã¢Â¬Â Export CSV</button>
   </div>
 </div>
 
 <div class="tabs">
-  <div class="tab active" onclick="switchTab('data',this)">ð Daily Data</div>
-  <div class="tab" onclick="switchTab('score',this)">ð Disruption Score</div>
-  <div class="tab" onclick="switchTab('delays',this)">â Delays &amp; Cancels</div>
+  <div class="tab active" onclick="switchTab('data',this)">Ã°ÂÂÂ Daily Data</div>
+  <div class="tab" onclick="switchTab('score',this)">Ã°ÂÂÂ Disruption Score</div>
+  <div class="tab" onclick="switchTab('delays',this)">Ã¢ÂÂ Delays &amp; Cancels</div>
   <div class="tab" onclick="switchTab('rate',this)">% Cancel Rate</div>
-  <div class="tab" onclick="switchTab('pax',this)">ð¥ Wtd. Passengers</div>
+  <div class="tab" onclick="switchTab('pax',this)">Ã°ÂÂÂ¥ Wtd. Passengers</div>
 </div>
 
 <div class="controls">
@@ -193,73 +193,73 @@ tbody td{padding:9px 11px;vertical-align:top;border-bottom:1px solid rgba(42,63,
       <option value="NORMAL">Normal</option>
     </select>
   </div>
-  <span style="margin-left:auto;color:var(--text-dim);font-size:11px">ð <code style="color:var(--accent2)">aviation_data.json</code> Â· <span id="rec-count">â</span> records</span>
+  <span style="margin-left:auto;color:var(--text-dim);font-size:11px">Ã°ÂÂÂ <code style="color:var(--accent2)">aviation_data.json</code> ÃÂ· <span id="rec-count">Ã¢ÂÂ</span> records</span>
 </div>
 
 <div class="kpis">
-  <div class="kpi"><div class="kpi-val" id="k-days" style="color:var(--accent2)">â</div><div class="kpi-lbl">Days Selected</div></div>
-  <div class="kpi"><div class="kpi-val" id="k-dl" style="color:#ffc107">â</div><div class="kpi-lbl">Total Delays</div><div class="kpi-sub" id="k-dl-avg"></div></div>
-  <div class="kpi"><div class="kpi-val" id="k-cx" style="color:#f44336">â</div><div class="kpi-lbl">Total Cancels</div><div class="kpi-sub" id="k-cx-avg"></div></div>
-  <div class="kpi"><div class="kpi-val" id="k-wp" style="color:#ce93d8">â</div><div class="kpi-lbl">Wtd. Pax Impacted</div></div>
-  <div class="kpi"><div class="kpi-val" id="k-sc" style="color:#ffc107">â</div><div class="kpi-lbl">Avg Score <button class="info-btn" onclick="document.getElementById('scoreModal').classList.add('open')" title="How is the score calculated?">â¹</button></div><div class="kpi-sub" id="k-sc-peak"></div></div>
-  <div class="kpi"><div class="kpi-val" id="k-hi" style="color:#f44336">â</div><div class="kpi-lbl">HIGH+ Days</div><div class="kpi-sub" id="k-ota"></div></div>
+  <div class="kpi"><div class="kpi-val" id="k-days" style="color:var(--accent2)">Ã¢ÂÂ</div><div class="kpi-lbl">Days Selected</div></div>
+  <div class="kpi"><div class="kpi-val" id="k-dl" style="color:#ffc107">Ã¢ÂÂ</div><div class="kpi-lbl">Total Delays</div><div class="kpi-sub" id="k-dl-avg"></div></div>
+  <div class="kpi"><div class="kpi-val" id="k-cx" style="color:#f44336">Ã¢ÂÂ</div><div class="kpi-lbl">Total Cancels</div><div class="kpi-sub" id="k-cx-avg"></div></div>
+  <div class="kpi"><div class="kpi-val" id="k-wp" style="color:#ce93d8">Ã¢ÂÂ</div><div class="kpi-lbl">Wtd. Pax Impacted</div></div>
+  <div class="kpi"><div class="kpi-val" id="k-sc" style="color:#ffc107">Ã¢ÂÂ</div><div class="kpi-lbl">Avg Score <button class="info-btn" onclick="document.getElementById('scoreModal').classList.add('open')" title="How is the score calculated?">Ã¢ÂÂ¹</button></div><div class="kpi-sub" id="k-sc-peak"></div></div>
+  <div class="kpi"><div class="kpi-val" id="k-hi" style="color:#f44336">Ã¢ÂÂ</div><div class="kpi-lbl">HIGH+ Days</div><div class="kpi-sub" id="k-ota"></div></div>
 </div>
 
-<div class="alert" id="alertBanner"><span>â ï¸</span><span id="alertText"></span></div>
+<div class="alert" id="alertBanner"><span>Ã¢ÂÂ Ã¯Â¸Â</span><span id="alertText"></span></div>
 
-<!-- ââ Disruption Score Explainer Modal âââââââââââââââââââââââââââââââââââ -->
+<!-- Ã¢ÂÂÃ¢ÂÂ Disruption Score Explainer Modal Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ -->
 <div class="modal-overlay" id="scoreModal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="modal">
     <div class="modal-hdr">
-      <span class="modal-title">ð What is the Disruption Score?</span>
-      <button class="modal-close" onclick="document.getElementById('scoreModal').classList.remove('open')">Ã</button>
+      <span class="modal-title">Ã°ÂÂÂ What is the Disruption Score?</span>
+      <button class="modal-close" onclick="document.getElementById('scoreModal').classList.remove('open')">ÃÂ</button>
     </div>
     <div class="modal-body">
 
-      <p class="modal-p">The disruption score is a <strong>0â100 daily severity index</strong> that combines flight delay volume, cancellation rate, and active FAA ground programs into a single number â making it easy to compare days and spot trends at a glance.</p>
+      <p class="modal-p">The disruption score is a <strong>0Ã¢ÂÂ100 daily severity index</strong> that combines flight delay volume, cancellation rate, and active FAA ground programs into a single number Ã¢ÂÂ making it easy to compare days and spot trends at a glance.</p>
 
       <div class="modal-sec">Formula</div>
       <div class="score-formula">
-        Score = (delays Ã· 5,601 baseline) Ã 28<br>
-              + (cancels Ã· 340 baseline)  Ã 38<br>
-              + (ground stops)            Ã  8<br>
-              + (ground delay programs)   Ã  4<br>
-        <span style="color:var(--text-dim)">ââ capped at 100 ââââââââââââââââââ</span>
+        Score = (delays ÃÂ· 5,601 baseline) ÃÂ 28<br>
+              + (cancels ÃÂ· 340 baseline)  ÃÂ 38<br>
+              + (ground stops)            ÃÂ  8<br>
+              + (ground delay programs)   ÃÂ  4<br>
+        <span style="color:var(--text-dim)">Ã¢ÂÂÃ¢ÂÂ capped at 100 Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ</span>
       </div>
 
       <div class="modal-sec">Severity Thresholds</div>
       <div class="thresh-grid">
         <div class="thresh-card" style="background:rgba(76,175,80,.1);border-color:rgba(76,175,80,.3)">
-          <div class="thresh-range" style="color:#4caf50">0 â 25</div>
+          <div class="thresh-range" style="color:#4caf50">0 Ã¢ÂÂ 25</div>
           <div class="thresh-lbl" style="color:#4caf50">Normal</div>
         </div>
         <div class="thresh-card" style="background:rgba(255,193,7,.1);border-color:rgba(255,193,7,.3)">
-          <div class="thresh-range" style="color:#ffc107">26 â 50</div>
+          <div class="thresh-range" style="color:#ffc107">26 Ã¢ÂÂ 50</div>
           <div class="thresh-lbl" style="color:#ffc107">Moderate</div>
         </div>
         <div class="thresh-card" style="background:rgba(244,67,54,.1);border-color:rgba(244,67,54,.3)">
-          <div class="thresh-range" style="color:#f44336">51 â 75</div>
+          <div class="thresh-range" style="color:#f44336">51 Ã¢ÂÂ 75</div>
           <div class="thresh-lbl" style="color:#f44336">High</div>
         </div>
         <div class="thresh-card" style="background:rgba(198,40,40,.15);border-color:rgba(244,67,54,.5)">
-          <div class="thresh-range" style="color:#ff5252">76 â 90</div>
+          <div class="thresh-range" style="color:#ff5252">76 Ã¢ÂÂ 90</div>
           <div class="thresh-lbl" style="color:#ff5252">Critical</div>
         </div>
         <div class="thresh-card" style="background:rgba(123,31,162,.15);border-color:rgba(123,31,162,.5)">
-          <div class="thresh-range" style="color:#ce93d8">91 â 100</div>
+          <div class="thresh-range" style="color:#ce93d8">91 Ã¢ÂÂ 100</div>
           <div class="thresh-lbl" style="color:#ce93d8">Crisis</div>
         </div>
       </div>
 
       <div class="modal-sec">What Each Level Means for OTA Workforce</div>
-      <div class="ota-row"><div class="ota-dot" style="background:#4caf50"></div><div><strong style="color:#4caf50">Normal (0â25)</strong> â <span style="color:var(--text-dim)">Routine background delays. Standard staffing. No proactive action needed.</span></div></div>
-      <div class="ota-row"><div class="ota-dot" style="background:#ffc107"></div><div><strong style="color:#ffc107">Moderate (26â50)</strong> â <span style="color:var(--text-dim)">Elevated delays across 1â2 hubs. Expect a modest contact volume uptick. Monitor closely.</span></div></div>
-      <div class="ota-row"><div class="ota-dot" style="background:#f44336"></div><div><strong style="color:#f44336">High (51â75)</strong> â <span style="color:var(--text-dim)">Major storm or multi-hub event. Significant rebooking demand. Consider staffing up.</span></div></div>
-      <div class="ota-row"><div class="ota-dot" style="background:#ff5252"></div><div><strong style="color:#ff5252">Critical (76â90)</strong> â <span style="color:var(--text-dim)">System-wide disruption. High cancellation rate. Proactive customer outreach recommended.</span></div></div>
-      <div class="ota-row"><div class="ota-dot" style="background:#ce93d8"></div><div><strong style="color:#ce93d8">Crisis (91â100)</strong> â <span style="color:var(--text-dim)">Extreme event (e.g. Easter 2026 storm sequence). All-hands response. Expect wave of contacts 24â48 hrs.</span></div></div>
+      <div class="ota-row"><div class="ota-dot" style="background:#4caf50"></div><div><strong style="color:#4caf50">Normal (0Ã¢ÂÂ25)</strong> Ã¢ÂÂ <span style="color:var(--text-dim)">Routine background delays. Standard staffing. No proactive action needed.</span></div></div>
+      <div class="ota-row"><div class="ota-dot" style="background:#ffc107"></div><div><strong style="color:#ffc107">Moderate (26Ã¢ÂÂ50)</strong> Ã¢ÂÂ <span style="color:var(--text-dim)">Elevated delays across 1Ã¢ÂÂ2 hubs. Expect a modest contact volume uptick. Monitor closely.</span></div></div>
+      <div class="ota-row"><div class="ota-dot" style="background:#f44336"></div><div><strong style="color:#f44336">High (51Ã¢ÂÂ75)</strong> Ã¢ÂÂ <span style="color:var(--text-dim)">Major storm or multi-hub event. Significant rebooking demand. Consider staffing up.</span></div></div>
+      <div class="ota-row"><div class="ota-dot" style="background:#ff5252"></div><div><strong style="color:#ff5252">Critical (76Ã¢ÂÂ90)</strong> Ã¢ÂÂ <span style="color:var(--text-dim)">System-wide disruption. High cancellation rate. Proactive customer outreach recommended.</span></div></div>
+      <div class="ota-row"><div class="ota-dot" style="background:#ce93d8"></div><div><strong style="color:#ce93d8">Crisis (91Ã¢ÂÂ100)</strong> Ã¢ÂÂ <span style="color:var(--text-dim)">Extreme event (e.g. Easter 2026 storm sequence). All-hands response. Expect wave of contacts 24Ã¢ÂÂ48 hrs.</span></div></div>
 
       <div class="modal-sec">Important Note</div>
-      <p class="modal-p">The score is a <strong>directional risk signal</strong>, not a precise operational metric. It's most useful for day-over-day comparison and early-warning staffing decisions. Daily data is sourced from the <strong>FAA NAS Status API</strong> and reflects morning conditions â end-of-day totals may differ.</p>
+      <p class="modal-p">The score is a <strong>directional risk signal</strong>, not a precise operational metric. It's most useful for day-over-day comparison and early-warning staffing decisions. Daily data is sourced from the <strong>FAA NAS Status API</strong> and reflects morning conditions Ã¢ÂÂ end-of-day totals may differ.</p>
 
     </div>
   </div>
@@ -286,8 +286,8 @@ tbody td{padding:9px 11px;vertical-align:top;border-bottom:1px solid rgba(42,63,
   <div style="padding:16px 24px">
     <div class="chart-card">
       <div class="chart-header">
-        <span class="chart-title">ð Disruption Score â Daily Trend</span>
-        <span class="chart-meta">Thresholds: â¤25 Normal Â· â¤50 Moderate Â· â¤75 High Â· â¤90 Critical Â· &gt;90 Crisis</span>
+        <span class="chart-title">Ã°ÂÂÂ Disruption Score Ã¢ÂÂ Daily Trend</span>
+        <span class="chart-meta">Thresholds: Ã¢ÂÂ¤25 Normal ÃÂ· Ã¢ÂÂ¤50 Moderate ÃÂ· Ã¢ÂÂ¤75 High ÃÂ· Ã¢ÂÂ¤90 Critical ÃÂ· &gt;90 Crisis</span>
       </div>
       <div class="chart-body" style="height:320px"><canvas id="chartScore"></canvas></div>
     </div>
@@ -299,8 +299,8 @@ tbody td{padding:9px 11px;vertical-align:top;border-bottom:1px solid rgba(42,63,
   <div style="padding:16px 24px">
     <div class="chart-card">
       <div class="chart-header">
-        <span class="chart-title">â Total Delays &amp; Cancellations â Daily</span>
-        <span class="chart-meta">Baselines: 5,601 delays Â· 340 cancels per day</span>
+        <span class="chart-title">Ã¢ÂÂ Total Delays &amp; Cancellations Ã¢ÂÂ Daily</span>
+        <span class="chart-meta">Baselines: 5,601 delays ÃÂ· 340 cancels per day</span>
       </div>
       <div class="chart-body" style="height:320px"><canvas id="chartDelays"></canvas></div>
     </div>
@@ -313,7 +313,7 @@ tbody td{padding:9px 11px;vertical-align:top;border-bottom:1px solid rgba(42,63,
     <div class="chart-card">
       <div class="chart-header">
         <span class="chart-title">% Cancellation Rate vs. Baseline</span>
-        <span class="chart-meta">100% = baseline of 340 cancels/day Â· Formula: (cancels / 340) Ã 100</span>
+        <span class="chart-meta">100% = baseline of 340 cancels/day ÃÂ· Formula: (cancels / 340) ÃÂ 100</span>
       </div>
       <div class="chart-body" style="height:320px"><canvas id="chartRate"></canvas></div>
     </div>
@@ -325,8 +325,8 @@ tbody td{padding:9px 11px;vertical-align:top;border-bottom:1px solid rgba(42,63,
   <div style="padding:16px 24px">
     <div class="chart-card">
       <div class="chart-header">
-        <span class="chart-title">ð¥ Weighted Passengers Impacted</span>
-        <span class="chart-meta">Formula: (cancels Ã 650) + (delays Ã 90)</span>
+        <span class="chart-title">Ã°ÂÂÂ¥ Weighted Passengers Impacted</span>
+        <span class="chart-meta">Formula: (cancels ÃÂ 650) + (delays ÃÂ 90)</span>
       </div>
       <div class="chart-body" style="height:320px"><canvas id="chartPax"></canvas></div>
     </div>
@@ -334,10 +334,10 @@ tbody td{padding:9px 11px;vertical-align:top;border-bottom:1px solid rgba(42,63,
 </div>
 
 <script>
-// ââ Data loaded from aviation_data.json ââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ Data loaded from aviation_data.json Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 // Fallback embedded data used if fetch fails (e.g. opening file locally)
 const FALLBACK=[
-{"d":"0228","sev":"HIGH","sc":58,"dl":3045,"cx":101,"wp":339700,"apt":[{"c":"â","dl":0,"cx":0,"s":"Normal operations â no airport specifics available"}],"cause":"Winter storm system across Southeast + DHS shutdown TSA staffing pressure","ota":"HIGH","fwd":"Residual disruption through Mar 1; TSA staffing gaps persist.","conf":"PARTIAL"},
+{"d":"0228","sev":"HIGH","sc":58,"dl":3045,"cx":101,"wp":339700,"apt":[{"c":"Ã¢ÂÂ","dl":0,"cx":0,"s":"Normal operations Ã¢ÂÂ no airport specifics available"}],"cause":"Winter storm system across Southeast + DHS shutdown TSA staffing pressure","ota":"HIGH","fwd":"Residual disruption through Mar 1; TSA staffing gaps persist.","conf":"PARTIAL"},
 {"d":"0301","sev":"MODERATE","sc":28,"dl":2100,"cx":90,"wp":225000,"apt":[{"c":"ORD","dl":198,"cx":12,"s":"Residual winter storm"},{"c":"JFK","dl":145,"cx":8,"s":"NE corridor winds"},{"c":"EWR","dl":133,"cx":6,"s":"NE corridor winds"}],"cause":"Residual winter storm effects + NE corridor winds","ota":"MODERATE","fwd":"Conditions improving; spring break travel builds.","conf":"PARTIAL"},
 {"d":"0305","sev":"MODERATE","sc":34,"dl":2420,"cx":115,"wp":292300,"apt":[{"c":"ORD","dl":210,"cx":18,"s":"Weather/staffing"},{"c":"ATL","dl":178,"cx":12,"s":"Weather"},{"c":"DFW","dl":155,"cx":9,"s":"Weather"}],"cause":"Spring storm development + TSA staffing shortages Day 10","ota":"MODERATE","fwd":"Spring storm activity building through weekend.","conf":"PARTIAL"},
 {"d":"0307","sev":"HIGH","sc":55,"dl":4100,"cx":189,"wp":492950,"apt":[{"c":"ORD","dl":389,"cx":42,"s":"Severe thunderstorms"},{"c":"ATL","dl":267,"cx":28,"s":"Thunderstorms"},{"c":"DFW","dl":234,"cx":19,"s":"Thunderstorms"}],"cause":"Major spring storm system + TSA staffing shortages (Day 12) + peak weekend volume","ota":"HIGH","fwd":"Storm exits Mon; residual crew repositioning through Tue.","conf":"PARTIAL"},
@@ -366,18 +366,18 @@ const FALLBACK=[
 {"d":"0413","sev":"MODERATE","sc":46,"dl":1759,"cx":79,"wp":209660,"apt":[{"c":"FLL","dl":300,"cx":22,"s":"Thunderstorms"},{"c":"ORD","dl":157,"cx":7,"s":"Storms, weather waiver"},{"c":"JFK","dl":156,"cx":8,"s":"Storms, NE weather"}],"cause":"Severe thunderstorms across Central/Eastern US + FAA ATC staffing shortages amid gov shutdown (LAX ground stop)","ota":"MODERATE","fwd":"Storm system shifting east; NE airports elevated risk next 24h. ATC staffing strain continues.","conf":"CONFIRMED"},
 {"d":"0414","sev":"HIGH","sc":52,"dl":2576,"cx":153,"wp":331290,"apt":[{"c":"ORD","dl":386,"cx":14,"s":"Thunderstorms, GDP, transatlantic cancels"},{"c":"ATL","dl":211,"cx":16,"s":"Storms, Delta hub GDP"},{"c":"DEN","dl":161,"cx":8,"s":"High-wind ground stop"}],"cause":"Severe thunderstorm system shifting east from Central US; multiple hub ground delay programs active (ORD, ATL, SFO, TPA)","ota":"HIGH","fwd":"Storm system exits East Coast next 24 hrs; residual delays Wed as crews/aircraft reposition. Improving by Thursday.","conf":"CONFIRMED"},
 {"d":"0415","sev":"MODERATE","sc":41,"dl":2300,"cx":135,"wp":294750,"apt":[{"c":"ORD","dl":315,"cx":9,"s":"Thunderstorms; FAA ground stop 10:20p-11:45p"},{"c":"CLT","dl":216,"cx":1,"s":"Post-Easter rebooking backlog (AA hub)"},{"c":"DFW","dl":186,"cx":6,"s":"Air traffic congestion; AA/DL/WN elevated"}],"cause":"Thunderstorms at ORD (late-night FAA ground stop) + continued post-Easter network recovery","ota":"MODERATE","fwd":"Apr 16 flagged as earliest realistic clean national day; ORD storm system clearing east by morning push; gradual normalization.","conf":"PARTIAL"},
-{"d":"0416","sev":"NORMAL","sc":15,"dl":1440,"cx":75,"wp":178350,"apt":[{"c":"â","dl":0,"cx":0,"s":"Normal operations â no airport specifics available"}],"cause":"Normal operations â no active FAA ground programs","ota":"LOW","fwd":"No active FAA ground programs. Normal operational outlook.","conf":"FAA-API"},
-{"d":"0417","sev":"HIGH","sc":55,"dl":3200,"cx":160,"wp":392000,"apt":[{"c":"ORD","dl":867,"cx":105,"s":"Historic flooding + FAA ground stop"},{"c":"SFO","dl":224,"cx":7,"s":"Low ceiling fog + FAA runway cap"},{"c":"BOS","dl":210,"cx":7,"s":"Weather + Lufthansa cancels"}],"al":"OO|UA|MQ|B6","cause":"ORD historic flooding (rainiest April day in decade) + FAA ground stop + SFO fog/runway cap + European triple strike spillover","ota":"HIGH","fwd":"ORD terminal flooding recovery expected 24-48 hrs; SFO runway constraints ongoing.","conf":"PARTIAL"},
-{"d":"0418","sev":"HIGH","sc":61,"dl":4313,"cx":338,"wp":607870,"apt":[{"c":"ORD","dl":531,"cx":187,"s":"77-year rainfall aftermath"},{"c":"LAS","dl":490,"cx":51,"s":"Volume + cascading"},{"c":"MSP","dl":300,"cx":7,"s":"Network congestion"},{"c":"LAX","dl":250,"cx":10,"s":"Volume congestion"}],"al":"WN|AA|DL|UA","cause":"ORD 77-year rainfall aftermath (531d/187c) + post-Easter Day 18 peak; 2nd-worst national total of crisis","ota":"HIGH","fwd":"FAA orders ORD to cut 300+ daily flights May 17-Oct 24 (cap 2,708/day). WN led all carriers at 1,030 delays.","conf":"CONFIRMED"},
-{"d":"0419","sev":"MODERATE","sc":45,"dl":3052,"cx":109,"wp":345530,"apt":[{"c":"DFW","dl":708,"cx":7,"s":"Congestion + AA hub cascade"},{"c":"ORD","dl":320,"cx":45,"s":"Flooding recovery + cancels"},{"c":"ATL","dl":136,"cx":9,"s":"Volume"},{"c":"JFK","dl":108,"cx":4,"s":"Volume congestion"}],"al":"AA|WN|OO|DL","cause":"DFW 700+ delays (worst single airport); ORD flooding recovery; cascading effects Day 19 of post-Easter crisis","ota":"MODERATE","fwd":"ORD FAA summer flight cap announced; system still under structural pressure.","conf":"CONFIRMED"},
-{"d":"0420","sev":"MODERATE","sc":50,"dl":4231,"cx":79,"wp":432140,"apt":[{"c":"ORD","dl":337,"cx":6,"s":"Severe thunderstorms"},{"c":"ATL","dl":290,"cx":4,"s":"Thunderstorms + wind"},{"c":"JFK","dl":123,"cx":5,"s":"Storms"},{"c":"DTW","dl":121,"cx":13,"s":"Thunderstorms (worst hit)"}],"al":"WN|AA|DL|UA","cause":"Severe thunderstorms, high winds, poor visibility nationwide; WN 730d, AA 542d; holiday-return backlog","ota":"MODERATE","fwd":"Storm system continuing into Mon; crew/aircraft repositioning compounding delays.","conf":"CONFIRMED"},
-{"d":"0421","sev":"MODERATE","sc":44,"dl":3002,"cx":105,"wp":338430,"apt":[{"c":"SFO","dl":368,"cx":60,"s":"Runway construction cascade"},{"c":"ATL","dl":180,"cx":5,"s":"Network congestion"},{"c":"BOS","dl":143,"cx":0,"s":"Operational slowdowns"},{"c":"JFK","dl":76,"cx":5,"s":"Volume"}],"al":"OO|UA|AA|DL|9E","cause":"SFO runway construction cascading nationwide (368d/60c epicenter); SkyWest 52cx rippled through 4 carriers","ota":"MODERATE","fwd":"SFO runway constraints ongoing for weeks; regional carrier stress elevating cancels.","conf":"CONFIRMED"},
-{"d":"0422","sev":"MODERATE","sc":33,"dl":1762,"cx":46,"wp":188480,"apt":[{"c":"ORD","dl":152,"cx":5,"s":"Residual congestion"},{"c":"LAX","dl":121,"cx":2,"s":"Volume"},{"c":"JFK","dl":63,"cx":5,"s":"Volume"}],"al":"WN|9E|AA|DL","cause":"Best recovery signal since Good Friday â 62% reduction from Apr 18 peak; 22-day streak continues but easing","ota":"LOW","fwd":"Recovery trend encouraging but system still running on thin margins; watch for weather regression.","conf":"CONFIRMED"},
-{"d":"0423","sev":"MODERATE","sc":40,"dl":2741,"cx":52,"wp":280490,"apt":[{"c":"DFW","dl":198,"cx":8,"s":"Hub congestion"},{"c":"ORD","dl":180,"cx":7,"s":"Volume + ATC staffing"},{"c":"DTW","dl":95,"cx":12,"s":"Cancellations lead"},{"c":"LAX","dl":113,"cx":3,"s":"Volume"}],"al":"WN|AA|UA|OO|9E","cause":"Regression from recovery â DFW/ORD hub bottlenecks + ATC staffing constraints + regional carrier cascading (SkyWest, Endeavor)","ota":"MODERATE","fwd":"System remains under structural pressure; no single weather driver but systemic stress persists.","conf":"PARTIAL"},
-{"d":"0424","sev":"MODERATE","sc":37,"dl":2181,"cx":49,"wp":228140,"apt":[{"c":"JFK","dl":81,"cx":4,"s":"East Coast congestion"},{"c":"MIA","dl":95,"cx":6,"s":"Volume + weather"},{"c":"IAD","dl":72,"cx":3,"s":"ATC + storms"}],"al":"AA|OO|UA|DL","cause":"Post-Easter crisis Day 24 â structural pressure continues; AA 236d, SkyWest 209d rippling through partner networks","ota":"MODERATE","fwd":"Weekend volume building; system has not fully recovered from Easter cascade.","conf":"PARTIAL"},
-{"d":"0425","sev":"MODERATE","sc":32,"dl":1639,"cx":56,"wp":183910,"apt":[{"c":"ORD","dl":494,"cx":6,"s":"Weather recovery + fueling failure"},{"c":"SAN","dl":170,"cx":0,"s":"Volume congestion"},{"c":"ATL","dl":150,"cx":13,"s":"Volume + weather"},{"c":"JFK","dl":92,"cx":9,"s":"Volume congestion"},{"c":"DTW","dl":46,"cx":0,"s":"Cascading ORD effects"},{"c":"HPN","dl":13,"cx":7,"s":"Nantucket construction cascade"}],"al":"DL|UA|AA|WN|B6","cause":"Weather recovery + ORD fueling failure; post-Easter Day 25","ota":"LOW","fwd":"Sunday volumes lighter; ORD fueling resolved. Watch residual crew displacement at ORD/ATL.","conf":"PARTIAL"},
-{"d":"0426","sev":"NORMAL","sc":18,"dl":1680,"cx":90,"wp":209700,"apt":[{"c":"â","dl":0,"cx":0,"s":"Normal operations â no airport specifics available"}],"cause":"Normal operations â no active FAA ground programs","ota":"LOW","fwd":"No active FAA programs. Normal operational outlook.","conf":"FAA-API-NORMAL"},
-{"d":"0427","sev":"NORMAL","sc":12,"dl":1200,"cx":60,"wp":147000,"apt":[{"c":"â","dl":0,"cx":0,"s":"Normal operations â no airport specifics available"}],"cause":"Normal operations â no active FAA ground programs","ota":"LOW","fwd":"No active FAA programs. Normal operational outlook.","conf":"FAA-API-NORMAL"}
+{"d":"0416","sev":"NORMAL","sc":15,"dl":1440,"cx":75,"wp":178350,"apt":[{"c":"Ã¢ÂÂ","dl":0,"cx":0,"s":"Normal operations Ã¢ÂÂ no airport specifics available"}],"cause":"Normal operations Ã¢ÂÂ no active FAA ground programs","ota":"LOW","fwd":"No active FAA ground programs. Normal operational outlook.","conf":"FAA-API"},
+{"d":"0417","sev":"HIGH","sc":55,"dl":3200,"cx":160,"wp":392000,"apt":[{"c":"ORD","dl":867,"cx":105,"s":"Historic flooding + FAA ground stop"},{"c":"SFO","dl":224,"cx":7,"s":"Low ceiling fog + FAA runway cap"},{"c":"BOS","dl":210,"cx":7,"s":"Weather + Lufthansa cancels"}],"al":"OO|UA|MQ|B6","cause":"ORD historic flooding (rainiest April day in decade) triggered FAA ground stop; SFO Runway 1R closure compounding (arrivals capped 36/hr); DHS shutdown TSA staffing gaps persist","ota":"HIGH","fwd":"ORD terminal flooding recovery expected 24-48 hrs; SFO runway constraints ongoing through Oct.","conf":"PARTIAL"},
+{"d":"0418","sev":"HIGH","sc":61,"dl":4313,"cx":338,"wp":607870,"apt":[{"c":"ORD","dl":531,"cx":187,"s":"77-year rainfall aftermath"},{"c":"LAS","dl":490,"cx":51,"s":"Volume + cascading"},{"c":"MSP","dl":300,"cx":7,"s":"Network congestion"},{"c":"LAX","dl":250,"cx":10,"s":"Volume congestion"}],"al":"WN|AA|DL|UA","cause":"ORD 77-year rainfall aftermath (531d/187c); 2nd-worst national total of spring crisis. WN led all carriers (1,030d). FAA ordered ORD flight cap (2,708/day May 17-Oct 24)","ota":"HIGH","fwd":"FAA ORD flight cap announced. DHS shutdown TSA funds depleting. SFO runway closure cascading.","conf":"CONFIRMED"},
+{"d":"0419","sev":"MODERATE","sc":45,"dl":3052,"cx":109,"wp":345530,"apt":[{"c":"DFW","dl":708,"cx":7,"s":"Congestion + AA hub cascade"},{"c":"ORD","dl":320,"cx":45,"s":"Flooding recovery + cancels"},{"c":"ATL","dl":136,"cx":9,"s":"Volume"},{"c":"JFK","dl":108,"cx":4,"s":"Volume congestion"}],"al":"AA|WN|OO|DL","cause":"DFW 700+ delays (worst single-airport day); ORD flooding recovery ongoing; ATC staffing constraints at NY TRACON + SoCal TRACON","ota":"MODERATE","fwd":"ORD FAA summer flight cap announced; SFO capacity constraints ongoing; DHS shutdown unresolved.","conf":"CONFIRMED"},
+{"d":"0420","sev":"MODERATE","sc":50,"dl":4231,"cx":79,"wp":432140,"apt":[{"c":"ORD","dl":337,"cx":6,"s":"Severe thunderstorms"},{"c":"ATL","dl":290,"cx":4,"s":"Thunderstorms + wind"},{"c":"JFK","dl":123,"cx":5,"s":"Storms"},{"c":"DTW","dl":121,"cx":13,"s":"Thunderstorms (worst hit)"}],"al":"WN|AA|DL|UA","cause":"Severe thunderstorms, high winds, poor visibility nationwide; WN 730d, AA 542d. Tightly planned rotations + ATC staffing gaps slowed recovery","ota":"MODERATE","fwd":"Storm system continuing into Mon; crew/aircraft repositioning compounding delays.","conf":"CONFIRMED"},
+{"d":"0421","sev":"MODERATE","sc":44,"dl":3002,"cx":105,"wp":338430,"apt":[{"c":"SFO","dl":368,"cx":60,"s":"Runway 1R closure cascade"},{"c":"ATL","dl":180,"cx":5,"s":"Network congestion"},{"c":"BOS","dl":143,"cx":0,"s":"Operational slowdowns"},{"c":"JFK","dl":76,"cx":5,"s":"Volume"}],"al":"OO|UA|AA|DL|9E","cause":"SFO Runway 1R closure cascading nationwide (368d/60c epicenter); SkyWest 52cx rippled through UA/DL/AA/AS partner networks; ATC staffing strain at SoCal/NY TRACONs","ota":"MODERATE","fwd":"SFO runway constraints ongoing through Oct 2; regional carrier stress elevating cancels system-wide.","conf":"CONFIRMED"},
+{"d":"0422","sev":"MODERATE","sc":33,"dl":1762,"cx":46,"wp":188480,"apt":[{"c":"ORD","dl":152,"cx":5,"s":"Residual congestion"},{"c":"LAX","dl":121,"cx":2,"s":"Volume"},{"c":"JFK","dl":63,"cx":5,"s":"Volume"}],"al":"WN|9E|AA|DL","cause":"Significant recovery â 62% reduction from Apr 18 peak. Structural pressures (ATC shortage, SFO closure, DHS/TSA crisis) persist but weather cooperating","ota":"LOW","fwd":"Recovery trend encouraging but system running on thin margins; ATC staffing and DHS shutdown unresolved.","conf":"CONFIRMED"},
+{"d":"0423","sev":"MODERATE","sc":40,"dl":2741,"cx":52,"wp":280490,"apt":[{"c":"DFW","dl":198,"cx":8,"s":"Hub congestion"},{"c":"ORD","dl":180,"cx":7,"s":"Volume + ATC staffing"},{"c":"DTW","dl":95,"cx":12,"s":"Cancellations lead"},{"c":"LAX","dl":113,"cx":3,"s":"Volume"}],"al":"WN|AA|UA|OO|9E","cause":"Regression from recovery â DFW/ORD hub bottlenecks + ATC staffing constraints (NY/SoCal TRACONs critically understaffed) + SkyWest/Endeavor regional carrier cascading","ota":"MODERATE","fwd":"System under structural pressure from ATC shortage, SFO closure, DHS shutdown; no major weather but systemic stress persists.","conf":"PARTIAL"},
+{"d":"0424","sev":"MODERATE","sc":37,"dl":2181,"cx":49,"wp":228140,"apt":[{"c":"JFK","dl":81,"cx":4,"s":"NY TRACON ATC constraints"},{"c":"MIA","dl":95,"cx":6,"s":"Volume + weather"},{"c":"IAD","dl":72,"cx":3,"s":"ATC + storms"}],"al":"AA|OO|UA|DL","cause":"Structural ATC staffing deficit + DHS/TSA shutdown strain + spring weather (storms DFW, wind LGA, low vis DEN); AA 236d, SkyWest 209d cascading through partner networks","ota":"MODERATE","fwd":"Weekend volume building; ATC and TSA structural issues unresolved. DHS warns funds run out early May.","conf":"PARTIAL"},
+{"d":"0425","sev":"MODERATE","sc":32,"dl":1639,"cx":56,"wp":183910,"apt":[{"c":"ORD","dl":494,"cx":6,"s":"Weather recovery + fueling failure"},{"c":"SAN","dl":170,"cx":0,"s":"Volume congestion"},{"c":"ATL","dl":150,"cx":13,"s":"Volume + weather"},{"c":"JFK","dl":92,"cx":9,"s":"Volume congestion"}],"al":"DL|UA|AA|WN|B6","cause":"ORD fueling system failure (494d) + Saturday lower volume offset by structural ATC/TSA constraints; SFO closure continues to reduce network capacity","ota":"LOW","fwd":"Sunday volumes lighter; ORD fueling resolved. ATC and DHS shutdown remain unresolved structural risks.","conf":"PARTIAL"},
+{"d":"0426","sev":"MODERATE","sc":30,"dl":1500,"cx":80,"wp":187000,"apt":[{"c":"TPA","dl":79,"cx":8,"s":"Cascading delays to LGA/JFK/ORD"},{"c":"JFK","dl":72,"cx":7,"s":"NY TRACON constraints"},{"c":"EWR","dl":65,"cx":5,"s":"NY metro congestion"}],"al":"DL|AA|UA|B6","cause":"Sunday lower volume but TPA cascading delays stranded 800+ travelers; NY metro (JFK/EWR) congestion from ATC staffing gaps at NY TRACON; DHS/TSA shutdown ongoing","ota":"LOW","fwd":"Monday volume surge expected; LGA wind vulnerability flagged. DHS funds depleting.","conf":"ESTIMATED"},
+{"d":"0427","sev":"HIGH","sc":56,"dl":4470,"cx":222,"wp":546600,"apt":[{"c":"ORD","dl":1021,"cx":152,"s":"Thunderstorms + volume surge"},{"c":"DFW","dl":390,"cx":21,"s":"Storms + AA hub cascade"},{"c":"LGA","dl":180,"cx":25,"s":"FAA ground stop (high winds)"}],"al":"OO|WN|AA|UA|9E|DL","cause":"LGA FAA ground stop (high winds) cascaded nationwide; ORD 1,021d/152c worst single-airport day; ATC staffing at 77% of target; DHS/TSA shutdown compounding","ota":"HIGH","fwd":"ORD and LGA recovery will take 24-48 hrs. DHS warns TSA funds exhausted by early May. ATC crisis deepening.","conf":"CONFIRMED"}
 ];
 
 let ALL = FALLBACK; // will be replaced by fetch result if on GitHub Pages
@@ -389,7 +389,7 @@ const DELAY_BASE=5601, CANCEL_BASE=340;
 function parseD(d){return new Date(2026,parseInt(d.slice(0,2))-1,parseInt(d.slice(2,4)))}
 function fmtDate(d){const dt=parseD(d);return MONTHS[dt.getMonth()]+' '+dt.getDate()+', 2026'}
 function fmtDay(d){return DAYS_OF_WEEK[parseD(d).getDay()]}
-function fmtNum(n){return n!=null?n.toLocaleString():'â'}
+function fmtNum(n){return n!=null?n.toLocaleString():'Ã¢ÂÂ'}
 function scoreColor(sc){if(sc<=25)return'#4caf50';if(sc<=50)return'#ffc107';if(sc<=75)return'#f44336';if(sc<=90)return'#ff5252';return'#ce93d8'}
 
 function getFiltered(){
@@ -405,7 +405,7 @@ function getFiltered(){
   });
 }
 
-// ââ Charts ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ Charts Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 const chartInst={};
 const BASE_OPTS={
   responsive:true, maintainAspectRatio:false,
@@ -477,7 +477,7 @@ function renderCharts(data){
   }}});
 }
 
-// ââ KPIs âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ KPIs Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function renderKPIs(data){
   const n=data.length;
   const dl=data.reduce((s,r)=>s+r.dl,0);
@@ -492,23 +492,23 @@ function renderKPIs(data){
   document.getElementById('k-dl-avg').textContent=n?'avg '+fmtNum(Math.round(dl/n))+'/day':'';
   document.getElementById('k-cx').textContent=fmtNum(cx);
   document.getElementById('k-cx-avg').textContent=n?'avg '+fmtNum(Math.round(cx/n))+'/day':'';
-  document.getElementById('k-wp').textContent=n?(wp/1000000).toFixed(1)+'M':'â';
-  document.getElementById('k-sc').textContent=sc||'â';
+  document.getElementById('k-wp').textContent=n?(wp/1000000).toFixed(1)+'M':'Ã¢ÂÂ';
+  document.getElementById('k-sc').textContent=sc||'Ã¢ÂÂ';
   document.getElementById('k-sc-peak').textContent=peak?'peak '+peak:'';
   document.getElementById('k-hi').textContent=hi;
   document.getElementById('k-ota').textContent=otaHi?otaHi+' days OTA HIGH+':'';
   document.getElementById('rec-count').textContent=ALL.length;
   const banner=document.getElementById('alertBanner');
   const crit=data.filter(r=>['CRITICAL','CRISIS'].includes(r.sev));
-  if(crit.length){banner.className='alert show hi';document.getElementById('alertText').innerHTML='<strong>'+crit.length+' CRITICAL/CRISIS day'+(crit.length>1?'s':'')+' in period:</strong> '+crit.map(r=>fmtDate(r.d)+' (Score '+r.sc+')').join(' Â· ')+'. Elevated OTA contact volume expected.';}
+  if(crit.length){banner.className='alert show hi';document.getElementById('alertText').innerHTML='<strong>'+crit.length+' CRITICAL/CRISIS day'+(crit.length>1?'s':'')+' in period:</strong> '+crit.map(r=>fmtDate(r.d)+' (Score '+r.sc+')').join(' ÃÂ· ')+'. Elevated OTA contact volume expected.';}
   else banner.className='alert';
 }
 
-// ââ Table ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ Table Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function renderTable(data){
   const body=document.getElementById('tBody');
   const foot=document.getElementById('tFoot');
-  if(!data.length){body.innerHTML='<tr><td colspan="11"><div class="empty"><div class="empty-icon">ð«</div><div>No data for selected range</div></div></td></tr>';foot.innerHTML='';return;}
+  if(!data.length){body.innerHTML='<tr><td colspan="11"><div class="empty"><div class="empty-icon">Ã°ÂÂÂ«</div><div>No data for selected range</div></div></td></tr>';foot.innerHTML='';return;}
   body.innerHTML=data.map(r=>{
     const aptList=(r.apt||[]).slice(0,3);
     const apts=aptList.length?aptList.map(a=>`<span class="apt-chip">${a.c} <span style="color:var(--text-dim);font-weight:400">${a.dl}d</span></span>`).join(''):'<span style="color:var(--text-dim);font-size:11px">No active programs</span>';
@@ -522,31 +522,31 @@ function renderTable(data){
       <td class="num-r">${fmtNum(r.cx)}<br><span class="num-s">${(r.cx/CANCEL_BASE*100).toFixed(1)}%</span></td>
       <td class="num-r">${(r.wp/1000).toFixed(0)}K</td>
       <td>${apts}</td>
-      <td class="cause-c">${r.cause||'â'}</td>
-      <td><span class="sv sv-${r.ota||'MODERATE'}">${r.ota||'â'}</span></td>
-      <td class="fwd-c">${r.fwd||'â'}</td>
+      <td class="cause-c">${r.cause||'Ã¢ÂÂ'}</td>
+      <td><span class="sv sv-${r.ota||'MODERATE'}">${r.ota||'Ã¢ÂÂ'}</span></td>
+      <td class="fwd-c">${r.fwd||'Ã¢ÂÂ'}</td>
     </tr>
     <tr class="det-row" id="detail-${r.d}"><td colspan="11" style="padding:0 10px 8px">
       <div class="det-panel">
         <div>
-          <div class="det-sec-title">ð Metrics</div>
+          <div class="det-sec-title">Ã°ÂÂÂ Metrics</div>
           <div class="det-item"><span class="det-lbl">Score</span><span class="det-val" style="color:${sc_col}">${r.sc}/100</span></div>
           <div class="det-item"><span class="det-lbl">Delays</span><span class="det-val">${fmtNum(r.dl)}</span></div>
           <div class="det-item"><span class="det-lbl">Cancellations</span><span class="det-val">${fmtNum(r.cx)}</span></div>
           <div class="det-item"><span class="det-lbl">vs. Delay Baseline</span><span class="det-val">${(r.dl/DELAY_BASE*100).toFixed(1)}%</span></div>
           <div class="det-item"><span class="det-lbl">vs. Cancel Baseline</span><span class="det-val">${(r.cx/CANCEL_BASE*100).toFixed(1)}%</span></div>
           <div class="det-item"><span class="det-lbl">Wtd. Passengers</span><span class="det-val">${fmtNum(r.wp)}</span></div>
-          <div class="det-item"><span class="det-lbl">Confidence</span><span class="det-val">${r.conf||'â'}</span></div>
+          <div class="det-item"><span class="det-lbl">Confidence</span><span class="det-val">${r.conf||'Ã¢ÂÂ'}</span></div>
         </div>
         <div>
-          <div class="det-sec-title">ð¬ Airport Breakdown</div>
+          <div class="det-sec-title">Ã°ÂÂÂ¬ Airport Breakdown</div>
           ${(r.apt||[]).map(a=>`<div class="det-item"><span class="det-lbl"><span class="apt-chip">${a.c}</span>${a.s?'<span style="color:var(--text-dim);font-size:10px;margin-left:4px">'+a.s.substring(0,20)+'</span>':''}</span><span class="det-val">${a.dl}d / ${a.cx}c</span></div>`).join('')}
         </div>
         <div>
-          <div class="det-sec-title">ð OTA Intelligence</div>
-          <div class="det-item"><span class="det-lbl">OTA Risk</span><span class="det-val"><span class="sv sv-${r.ota}">${r.ota||'â'}</span></span></div>
-          <div style="margin-top:10px"><div class="det-sec-title">ð Primary Cause</div><div style="color:var(--text);font-size:11px;line-height:1.6">${r.cause||'â'}</div></div>
-          <div style="margin-top:10px"><div class="det-sec-title">ð­ Forward Look</div><div style="color:var(--text-dim);font-size:11px;line-height:1.6">${r.fwd||'â'}</div></div>
+          <div class="det-sec-title">Ã°ÂÂÂ OTA Intelligence</div>
+          <div class="det-item"><span class="det-lbl">OTA Risk</span><span class="det-val"><span class="sv sv-${r.ota}">${r.ota||'Ã¢ÂÂ'}</span></span></div>
+          <div style="margin-top:10px"><div class="det-sec-title">Ã°ÂÂÂ Primary Cause</div><div style="color:var(--text);font-size:11px;line-height:1.6">${r.cause||'Ã¢ÂÂ'}</div></div>
+          <div style="margin-top:10px"><div class="det-sec-title">Ã°ÂÂÂ­ Forward Look</div><div style="color:var(--text-dim);font-size:11px;line-height:1.6">${r.fwd||'Ã¢ÂÂ'}</div></div>
         </div>
       </div>
     </td></tr>`;
@@ -561,7 +561,7 @@ function renderTable(data){
     <td class="num-r">${fmtNum(totDl)}<br><span class="num-s">avg ${fmtNum(Math.round(totDl/data.length))}/d</span></td>
     <td class="num-r">${fmtNum(totCx)}<br><span class="num-s">avg ${fmtNum(Math.round(totCx/data.length))}/d</span></td>
     <td class="num-r">${(totWp/1000000).toFixed(2)}M</td>
-    <td colspan="4" style="color:var(--text-dim);font-size:11px">${hiD} HIGH+ days Â· ${data.filter(r=>['CRITICAL','CRISIS'].includes(r.sev)).length} CRITICAL/CRISIS Â· OTA elevated ${data.filter(r=>['HIGH','CRITICAL','CRISIS'].includes(r.ota||'')).length} days</td>
+    <td colspan="4" style="color:var(--text-dim);font-size:11px">${hiD} HIGH+ days ÃÂ· ${data.filter(r=>['CRITICAL','CRISIS'].includes(r.sev)).length} CRITICAL/CRISIS ÃÂ· OTA elevated ${data.filter(r=>['HIGH','CRITICAL','CRISIS'].includes(r.ota||'')).length} days</td>
   </tr>`;
 }
 
@@ -610,7 +610,7 @@ function exportCSV(){
   a.click();
 }
 
-// ââ Set date inputs to today (end) and 15 days ago (start) dynamically âââââââ
+// Ã¢ÂÂÃ¢ÂÂ Set date inputs to today (end) and 15 days ago (start) dynamically Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function initDates(){
   const today=new Date();
   const start=new Date(today-(14)*86400000);
@@ -619,7 +619,7 @@ function initDates(){
 }
 initDates();
 
-// ââ Load from aviation_data.json if hosted on GitHub Pages ââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ Load from aviation_data.json if hosted on GitHub Pages Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 fetch('aviation_data.json')
   .then(r => { if (!r.ok) throw new Error('JSON not found'); return r.json(); })
   .then(data => {
